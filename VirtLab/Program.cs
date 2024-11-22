@@ -12,6 +12,7 @@ builder.Services.ConfigureIISIntegration();
 builder.Services.ConfigureLoggerService();
 
 // Add services to the container.
+builder.Services.ConfigureRepositoryManager();
 
 builder.Services.AddControllers();
 
