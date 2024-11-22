@@ -1,0 +1,6 @@
+@VirtLab_HostAddress = http://localhost:5223
+
+GET {{VirtLab_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
