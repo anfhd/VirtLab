@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.HttpOverrides;
 using VirtLab.Extensions;
 using NLog;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,8 @@ builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureSqlContext(builder.Configuration);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddApplicationPart(typeof(VirtLab.Presentation.AssemblyReference).Assembly);
 
 var app = builder.Build();
 

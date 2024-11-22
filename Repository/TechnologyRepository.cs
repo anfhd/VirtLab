@@ -15,5 +15,10 @@ namespace Repository
         {
             
         }
+
+        public IEnumerable<Technology> GetAllTechnologies(bool trackChanges) =>
+           FindAll(trackChanges)
+           .OrderBy(t => t.Name)
+           .ToList();
     }
 }

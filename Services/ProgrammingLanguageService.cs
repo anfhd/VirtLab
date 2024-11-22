@@ -1,4 +1,5 @@
 ﻿using Contracts;
+using Entities.Models;
 using Services.Contracts;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,22 @@ namespace Services
         {
             _repository = repository;
             _logger = logger;
+        }
+
+        public IEnumerable<ProgrammingLanguage> GetAllProgrammingLanguages(bool trackChanges)
+        {
+            try
+            {
+                var programmingLanguages = _repository.ProgrammingLanguage.GetAllProgrammingLanguages(trackChanges);
+
+                return programmingLanguages;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"Somehting went wrong in the {nameof(GetAllProgrammingLanguages)} service method {ex}");
+
+                throw;
+            }
         }
     }
 }

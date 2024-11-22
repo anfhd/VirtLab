@@ -1,4 +1,5 @@
 ﻿using Contracts;
+using Entities.Models;
 using Services.Contracts;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,22 @@ namespace Services
         {
             _repository = repository;
             _logger = logger;
+        }
+
+        public IEnumerable<Technology> GetAllTechnologies(bool trackChanges)
+        {
+            try
+            {
+                var technologies = _repository.Technology.GetAllTechnologies(trackChanges);
+
+                return technologies;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Somehting went wrong in the {nameof(GetAllTechnologies)} service method {ex}");
+
+                throw;
+            }
         }
     }
 }
