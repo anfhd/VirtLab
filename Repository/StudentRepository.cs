@@ -15,5 +15,10 @@ namespace Repository
         {
             
         }
+
+        public IEnumerable<Student> GetAllStudents(bool trackChanges) =>
+           FindAll(trackChanges)
+           .OrderBy(s => s.Id)
+           .ToList();
     }
 }

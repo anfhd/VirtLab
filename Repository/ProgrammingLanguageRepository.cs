@@ -15,5 +15,10 @@ namespace Repository
         {
 
         }
+
+        public IEnumerable<ProgrammingLanguage> GetAllProgrammingLanguages(bool trackChanges) => 
+            FindAll(trackChanges)
+            .OrderBy(pl => pl.Name)
+            .ToList();
     }
 }
