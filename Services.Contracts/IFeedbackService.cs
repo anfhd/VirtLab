@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Services.Contracts
 {
-    public interface IProjectService
+    public interface IFeedbackService
     {
-        IEnumerable<Project> GetAllProjects(bool trackChanges);
-        Project GetProject(Guid projectId, bool trackChanges);
+        IEnumerable<Feedback> GetFeedback(Guid projectId, bool trackChanges);
     }
 }

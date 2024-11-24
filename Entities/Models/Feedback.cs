@@ -16,5 +16,10 @@ namespace Entities.Models
         [ForeignKey("Teacher")]
         public Guid TeacherId { get; set; }
         public Teacher? Teacher { get; set; }
+
+        [ForeignKey("Project")]
+        public Guid ProjectId { get; set; }
+        public virtual Project? Project { get; set; }
+
     }
 }

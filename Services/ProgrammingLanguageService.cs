@@ -22,18 +22,9 @@ namespace Services
 
         public IEnumerable<ProgrammingLanguage> GetAllProgrammingLanguages(bool trackChanges)
         {
-            try
-            {
-                var programmingLanguages = _repository.ProgrammingLanguage.GetAllProgrammingLanguages(trackChanges);
+            var programmingLanguages = _repository.ProgrammingLanguage.GetAllProgrammingLanguages(trackChanges);
 
-                return programmingLanguages;
-            }
-            catch(Exception ex)
-            {
-                _logger.LogError($"Somehting went wrong in the {nameof(GetAllProgrammingLanguages)} service method {ex}");
-
-                throw;
-            }
+            return programmingLanguages;
         }
     }
 }

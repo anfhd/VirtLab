@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Contracts
 {
-    public interface IProjectRepository
+    public interface IGroupRepository
     {
-        IEnumerable<Project> GetAllProjects(bool trackChanges);
-        Project GetProject(Guid projectId, bool trackChanges);
+        IEnumerable<Group> GetAllGroups(bool trackChanges);
     }
 }

@@ -14,5 +14,9 @@ namespace Entities.Models
 
         public Guid MarkId { get; set; }
         public Mark? Mark { get; set; }
+
+        public virtual ICollection<Feedback>? Feedbacks { get; set; }
+        public virtual ICollection<Technology>? Technologies { get; set; }
+        public virtual ICollection<ProgrammingLanguage>? ProgrammingLanguages { get; set; }
     }
 }

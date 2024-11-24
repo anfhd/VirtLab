@@ -15,5 +15,6 @@ namespace Entities.Models
         public Guid GroupId { get; set; }
         public Group? Group { get; set; }
         public virtual ICollection<Project>? Projects { get; set; }
+        public virtual ICollection<Course>? Courses { get; set; }
     }
 }

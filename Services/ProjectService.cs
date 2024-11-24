@@ -22,18 +22,11 @@ namespace Services
 
         public IEnumerable<Project> GetAllProjects(bool trackChanges)
         {
-            try
-            {
-                var projects = _repository.Project.GetAllProjects(trackChanges);
+            var projects = _repository.Project.GetAllProjects(trackChanges);
 
-                return projects;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Somehting went wrong in the {nameof(GetAllProjects)} service method {ex}");
-
-                throw;
-            }
+            return projects;
         }
+
+        public Project GetProject(Guid projectId, bool trackChanges) => _repository.Project.GetProject(projectId, trackChanges);
     }
 }

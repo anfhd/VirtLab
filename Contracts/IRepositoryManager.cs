@@ -12,6 +12,10 @@ namespace Contracts
         IProjectRepository Project { get; }
         IStudentRepository Student { get; }
         ITechnologyRepository Technology { get; }
+        ITeacherRepository Teacher { get; }
+        IGroupRepository Group { get; }
+        ICourseRepository Course { get; }
+        IFeedbackRepository Feedback { get; }
 
         void Save();
     }

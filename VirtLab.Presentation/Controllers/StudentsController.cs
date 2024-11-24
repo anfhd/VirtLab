@@ -19,16 +19,9 @@ namespace VirtLab.Presentation.Controllers
         [HttpGet]
         public IActionResult GetStudents()
         {
-            try
-            {
-                var students = _service.StudentService.GetAllStudents(trackChanges: false);
+            var students = _service.StudentService.GetAllStudents(trackChanges: false);
 
-                return Ok(students);
-            }
-            catch
-            {
-                return StatusCode(500, "Internal server error");
-            }
+            return Ok(students);
         }
     }
 }

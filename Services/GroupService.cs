@@ -9,22 +9,22 @@ using System.Threading.Tasks;
 
 namespace Services
 {
-    internal sealed class TechnologyService: ITechnologyService
+    internal sealed class GroupService : IGroupService
     {
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
 
-        public TechnologyService(IRepositoryManager repository, ILoggerManager logger)
+        public GroupService(IRepositoryManager repository, ILoggerManager logger)
         {
             _repository = repository;
             _logger = logger;
         }
 
-        public IEnumerable<Technology> GetAllTechnologies(bool trackChanges)
+        public IEnumerable<Group> GetAllGroups(bool trackChanges)
         {
-            var technologies = _repository.Technology.GetAllTechnologies(trackChanges);
+            var groups = _repository.Group.GetAllGroups(trackChanges);
 
-            return technologies;
+            return groups;
         }
     }
 }

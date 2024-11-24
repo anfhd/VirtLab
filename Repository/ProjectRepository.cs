@@ -20,5 +20,9 @@ namespace Repository
            FindAll(trackChanges)
            .OrderBy(p => p.Name)
            .ToList();
+
+        public Project GetProject(Guid projectId, bool trackChanges) =>
+            FindByCondition(p => p.Id.Equals(projectId), trackChanges)
+            .SingleOrDefault();
     }
 }

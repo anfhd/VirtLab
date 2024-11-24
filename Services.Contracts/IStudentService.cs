@@ -10,5 +10,7 @@ namespace Services.Contracts
     public interface IStudentService
     {
         IEnumerable<Student> GetAllStudents(bool trackChanges);
+        Student GetStudent(Guid studentId, bool trackChanges);
+        void CreateStudent(Student student);
     }
 }

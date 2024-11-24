@@ -6,8 +6,13 @@ namespace Entities.Models
     {
         public Guid Id { get; set; }
 
+        public string Name { get; set; }
+
         [ForeignKey("Teacher")]
         public Guid TeacherId { get; set; }
         public Teacher? Teacher { get; set; }
+
+        public virtual ICollection<Student>? Students { get; set; }
+
     }
 }

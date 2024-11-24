@@ -19,16 +19,9 @@ namespace VirtLab.Presentation.Controllers
         [HttpGet]
         public IActionResult GetProjects()
         {
-            try
-            {
-                var projects = _service.ProjectService.GetAllProjects(trackChanges: false);
+            var projects = _service.ProjectService.GetAllProjects(trackChanges: false);
 
-                return Ok(projects);
-            }
-            catch
-            {
-                return StatusCode(500, "Internal server error");
-            }
+            return Ok(projects);
         }
     }
 }
