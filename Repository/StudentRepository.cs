@@ -1,30 +1,20 @@
 ﻿using Contracts;
 using Entities.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Repository
+namespace Repository;
+
+public class StudentRepository(RepositoryContext repositoryContext)
+    : RepositoryBase<Student>(repositoryContext), IStudentRepository
 {
-    public class StudentRepository: RepositoryBase<Student>, IStudentRepository
-    {
-        public StudentRepository(RepositoryContext repositoryContext)
-            :base(repositoryContext)
-        {
-            
-        }
+    /* TODO: Implement async versions later */
+    public void CreateStudent(Student student) => Create(student);
 
-        public void CreateStudent(Student student) => Create(student);
+    public IEnumerable<Student> GetAllStudents(bool trackChanges) =>
+        FindAll(trackChanges)
+            .OrderBy(s => s.Id)
+            .ToList();
 
-        public IEnumerable<Student> GetAllStudents(bool trackChanges) =>
-           FindAll(trackChanges)
-           .OrderBy(s => s.Id)
-           .ToList();
-
-        public Student GetStudent(Guid studentId, bool trackChanges) =>
-            FindByCondition(s => s.Id.Equals(studentId), trackChanges)
+    public Student GetStudent(Guid studentId, bool trackChanges) =>
+        FindByCondition(s => s.Id.Equals(studentId), trackChanges)
             .SingleOrDefault();
-    }
 }
