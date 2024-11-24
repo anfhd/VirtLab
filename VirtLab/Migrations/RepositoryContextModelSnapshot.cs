@@ -53,12 +53,12 @@ namespace VirtLab.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("StudentId")
+                    b.Property<Guid>("OwnerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Projects", (string)null);
                 });
@@ -297,13 +297,13 @@ namespace VirtLab.Migrations
 
             modelBuilder.Entity("Entities.Models.Project", b =>
                 {
-                    b.HasOne("Entities.Models.Student", "Student")
+                    b.HasOne("Entities.Models.Student", "Owner")
                         .WithMany("Projects")
-                        .HasForeignKey("StudentId")
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Student");
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -3,15 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34408.163
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtLab", "VirtLab.csproj", "{8EDCD4A6-F0AB-432D-84B0-A0CEF61379CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VirtLab", "VirtLab.csproj", "{8EDCD4A6-F0AB-432D-84B0-A0CEF61379CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "..\Contracts\Contracts.csproj", "{A36682EB-E857-4946-A57D-5F553AC0C128}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contracts", "..\Contracts\Contracts.csproj", "{A36682EB-E857-4946-A57D-5F553AC0C128}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerService", "..\LoggerService\LoggerService.csproj", "{4758A428-FA58-4DB0-AE64-3941FF8DAE3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerService", "..\LoggerService\LoggerService.csproj", "{4758A428-FA58-4DB0-AE64-3941FF8DAE3C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "..\Entities\Entities.csproj", "{4942A0C0-3CDF-4A0B-BF00-8E10C5CA7F85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "..\Entities\Entities.csproj", "{4942A0C0-3CDF-4A0B-BF00-8E10C5CA7F85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "..\Repository\Repository.csproj", "{DCCA59EA-E74A-4574-A37D-0405809185C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "..\Repository\Repository.csproj", "{DCCA59EA-E74A-4574-A37D-0405809185C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Contracts", "..\Services.Contracts\Services.Contracts.csproj", "{C23AF944-B9DE-4880-A6CC-9296DF47E444}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "..\Services\Services.csproj", "{02B71CDF-B9FB-4D60-9A0F-2424E7CBA40B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VirtLab.Presentation", "..\VirtLab.Presentation\VirtLab.Presentation.csproj", "{41A79319-C3CA-4C9B-9BE8-9A062A49762C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +45,18 @@ Global
 		{DCCA59EA-E74A-4574-A37D-0405809185C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCCA59EA-E74A-4574-A37D-0405809185C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCCA59EA-E74A-4574-A37D-0405809185C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C23AF944-B9DE-4880-A6CC-9296DF47E444}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C23AF944-B9DE-4880-A6CC-9296DF47E444}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C23AF944-B9DE-4880-A6CC-9296DF47E444}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C23AF944-B9DE-4880-A6CC-9296DF47E444}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02B71CDF-B9FB-4D60-9A0F-2424E7CBA40B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02B71CDF-B9FB-4D60-9A0F-2424E7CBA40B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02B71CDF-B9FB-4D60-9A0F-2424E7CBA40B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02B71CDF-B9FB-4D60-9A0F-2424E7CBA40B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41A79319-C3CA-4C9B-9BE8-9A062A49762C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41A79319-C3CA-4C9B-9BE8-9A062A49762C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41A79319-C3CA-4C9B-9BE8-9A062A49762C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41A79319-C3CA-4C9B-9BE8-9A062A49762C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

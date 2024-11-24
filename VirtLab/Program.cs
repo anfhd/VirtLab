@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.HttpOverrides;
 using VirtLab.Extensions;
 using NLog;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,8 +16,12 @@ builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();
 
 // Add services to the container.
+builder.Services.ConfigureRepositoryManager();
+builder.Services.ConfigureServiceManager();
+builder.Services.ConfigureSqlContext(builder.Configuration);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddApplicationPart(typeof(VirtLab.Presentation.AssemblyReference).Assembly);
 
 var app = builder.Build();
 
@@ -39,34 +44,34 @@ app.UseCors("CorsPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.Use(async (context, next) =>
-{
-    Console.WriteLine($"Logic before executing the next delegate in the Use method");
-    await next.Invoke();
-    Console.WriteLine($"Logic after executing the next delegate in the Use method");
-});
+//app.Use(async (context, next) =>
+//{
+//    Console.WriteLine($"Logic before executing the next delegate in the Use method");
+//    await next.Invoke();
+//    Console.WriteLine($"Logic after executing the next delegate in the Use method");
+//});
 
-app.Map("/usingmapbranch", builder =>
-{
-    builder.Use(async (context, next) =>
-    {
-        Console.WriteLine("Map branch logic in the Use method before the next delegate");
+//app.Map("/usingmapbranch", builder =>
+//{
+//    builder.Use(async (context, next) =>
+//    {
+//        Console.WriteLine("Map branch logic in the Use method before the next delegate");
 
-        await next.Invoke();
-        Console.WriteLine("Map branch logic in the Use method after the next delegate");
-    });
-    builder.Run(async context =>
-    {
-        Console.WriteLine($"Map branch response to the client in the Run method");
-        await context.Response.WriteAsync("Hello from the map branch.");
-    });
-});
+//        await next.Invoke();
+//        Console.WriteLine("Map branch logic in the Use method after the next delegate");
+//    });
+//    builder.Run(async context =>
+//    {
+//        Console.WriteLine($"Map branch response to the client in the Run method");
+//        await context.Response.WriteAsync("Hello from the map branch.");
+//    });
+//});
 
-app.Run(async context =>
-{
-    Console.WriteLine($"Writing the response to the client in the Run method");
-    await context.Response.WriteAsync("Hello from the middleware component.");
-});
+//app.Run(async context =>
+//{
+//    Console.WriteLine($"Writing the response to the client in the Run method");
+//    await context.Response.WriteAsync("Hello from the middleware component.");
+//});
 
 
 app.MapControllers();

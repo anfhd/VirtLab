@@ -10,7 +10,7 @@ namespace Entities.Models
         public bool IsAccepted {  get; set; }
 
         [ForeignKey("Owner")]
-        public Guid StudentId { get; set; }
-        public Student? Student { get; set; }
+        public Guid OwnerId { get; set; }
+        public Student? Owner { get; set; }
     }
 }
