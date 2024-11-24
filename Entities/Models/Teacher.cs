@@ -7,13 +7,11 @@ using System.Threading.Tasks;
 
 namespace Entities.Models
 {
-    public class Student
+    public class Teacher
     {
         public Guid Id { get; set; }
-        public string UserId {  get; set; }
+        public string UserId { get; set; }
         public User? User { get; set; }
-        public Guid GroupId { get; set; }
-        public Group? Group { get; set; }
-        public virtual ICollection<Project>? Projects { get; set; }
+        public virtual ICollection<Course>? Courses { get; set; }
     }
 }

@@ -9,8 +9,10 @@ namespace Entities.Models
         public bool IsSentForReview { get; set; }
         public bool IsAccepted {  get; set; }
 
-        [ForeignKey("Owner")]
         public Guid OwnerId { get; set; }
         public Student? Owner { get; set; }
+
+        public Guid MarkId { get; set; }
+        public Mark? Mark { get; set; }
     }
 }
