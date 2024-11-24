@@ -17,9 +17,9 @@ namespace VirtLab.Presentation.Controllers
         public ProgrammingLanguagesController(IServiceManager service) => _service = service;
 
         [HttpGet]
-        public IActionResult GetProgrammingLanguages()
+        public async Task<IActionResult> GetProgrammingLanguages()
         {
-            var programmingLanguages = _service.ProgrammingLanguageService.GetAllProgrammingLanguages(trackChanges: false);
+            var programmingLanguages = await _service.ProgrammingLanguageService.GetAllProgrammingLanguagesAsync(trackChanges: false);
 
             return Ok(programmingLanguages);
         }

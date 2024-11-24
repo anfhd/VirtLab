@@ -49,6 +49,6 @@ namespace Repository
         public ICourseRepository Course => _courseRepository.Value;
         public IFeedbackRepository Feedback => _fedbackRepository.Value;
 
-        public void Save() => _repositoryContext.SaveChanges();
+        public async Task SaveAsync() => await _repositoryContext.SaveChangesAsync();
     }
 }

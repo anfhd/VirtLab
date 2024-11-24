@@ -20,9 +20,9 @@ namespace Services
             _logger = logger;
         }
 
-        public IEnumerable<Course> GetAllCourses(bool trackChanges)
+        public async Task<IEnumerable<Course>> GetAllCoursesAsync(bool trackChanges)
         {
-            var courses = _repository.Course.GetAllCourses(trackChanges);
+            var courses = await _repository.Course.GetAllCoursesAsync(trackChanges);
 
             return courses;
         }

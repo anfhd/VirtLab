@@ -1,4 +1,5 @@
 ﻿using Contracts;
+using Entities.Exceptions;
 using Entities.Models;
 using Services.Contracts;
 using System;
@@ -20,19 +21,37 @@ namespace Services
             _logger = logger;
         }
 
-        public void CreateTeacher(Teacher teacher)
+        public async void CreateTeacher(Teacher teacher)
         {
             _repository.Teacher.CreateTeacher(teacher);
-            _repository.Save();
+            await _repository.SaveAsync();
         }
 
-        public IEnumerable<Teacher> GetAllTeachers(bool trackChanges)
+        public async Task<IEnumerable<Teacher>> GetAllTeachersAsync(bool trackChanges)
         {
-            var teachers = _repository.Teacher.GetAllTeachers(trackChanges);
+            var teachers = await _repository.Teacher.GetAllTeachersAsync(trackChanges);
 
             return teachers;
         }
 
-        public Teacher GetTeacher(int teacherId, bool trackChanges) => _repository.Teacher.GetTeacher(teacherId, trackChanges);
+        public async Task<IEnumerable<Course>> GetCoursesForTeacherAsync(Guid teacherId, bool trackChanges)
+        {
+            var teacher = await _repository.Teacher.GetTeacherAsync(teacherId, trackChanges);
+
+            if (teacher is null) throw new TeacherNotFoundException(teacherId);
+
+            var teacherCourses = await _repository.Teacher.GetCoursesForTeacherAsync(teacherId, trackChanges);
+
+            return teacherCourses;
+        }
+
+        public async Task<Teacher> GetTeacherAsync(Guid teacherId, bool trackChanges)
+        {
+            var teacher = await _repository.Teacher.GetTeacherAsync(teacherId, trackChanges);
+
+            if(teacher is null) throw new TeacherNotFoundException(teacherId);
+
+            return teacher;
+        }
     }
 }

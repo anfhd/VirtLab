@@ -17,9 +17,9 @@ namespace VirtLab.Presentation.Controllers
         public GroupsController(IServiceManager service) => _service = service;
 
         [HttpGet]
-        public IActionResult GetGroups()
+        public async Task<IActionResult> GetGroups()
         {
-            var groups = _service.GroupService.GetAllGroups(trackChanges: false);
+            var groups = await _service.GroupService.GetAllGroupsAsync(trackChanges: false);
 
             return Ok(groups);
         }

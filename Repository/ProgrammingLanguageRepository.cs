@@ -1,5 +1,6 @@
 ﻿using Contracts;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,9 @@ namespace Repository
 
         }
 
-        public IEnumerable<ProgrammingLanguage> GetAllProgrammingLanguages(bool trackChanges) => 
-            FindAll(trackChanges)
+        public async Task<IEnumerable<ProgrammingLanguage>> GetAllProgrammingLanguagesAsync(bool trackChanges) => 
+            await FindAll(trackChanges)
             .OrderBy(pl => pl.Name)
-            .ToList();
+            .ToListAsync();
     }
 }

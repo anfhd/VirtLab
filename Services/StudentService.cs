@@ -1,4 +1,5 @@
 ﻿using Contracts;
+using Entities.Exceptions;
 using Entities.Models;
 using Services.Contracts;
 using System;
@@ -20,19 +21,37 @@ namespace Services
             _logger = logger;
         }
 
-        public void CreateStudent(Student student)
+        public async void CreateStudent(Student student)
         {
             _repository.Student.CreateStudent(student);
-            _repository.Save();
+            await _repository.SaveAsync();
         }
 
-        public IEnumerable<Student> GetAllStudents(bool trackChanges)
+        public async Task<IEnumerable<Student>> GetAllStudentsAsync(bool trackChanges)
         {
-            var students = _repository.Student.GetAllStudents(trackChanges);
+            var students = await _repository.Student.GetAllStudentsAsync(trackChanges);
 
             return students;
         }
 
-        public Student GetStudent(Guid studentId, bool trackChanges) => _repository.Student.GetStudent(studentId, trackChanges);
+        public async Task<IEnumerable<Course>> GetCoursesForStudentAsync(Guid studentId, bool trackChanges)
+        {
+            var student = await _repository.Student.GetStudentAsync(studentId, trackChanges);
+
+            if (student is null) throw new StudentNotFoundException(studentId);
+
+            var studentCourses = await _repository.Student.GetCoursesForStudentAsync(studentId, trackChanges);
+
+            return studentCourses;
+        }
+
+        public async Task<Student> GetStudentAsync(Guid studentId, bool trackChanges)
+        {
+            var student = await _repository.Student.GetStudentAsync(studentId, trackChanges);
+
+            if(student is null) throw new StudentNotFoundException(studentId);
+
+            return student;
+        }
     }
 }

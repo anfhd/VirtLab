@@ -1,4 +1,5 @@
 ﻿using Contracts;
+using Entities.Exceptions;
 using Entities.Models;
 using Services.Contracts;
 using System;
@@ -20,13 +21,20 @@ namespace Services
             _logger = logger;
         }
 
-        public IEnumerable<Project> GetAllProjects(bool trackChanges)
+        public async Task<IEnumerable<Project>> GetAllProjectsAsync(bool trackChanges)
         {
-            var projects = _repository.Project.GetAllProjects(trackChanges);
+            var projects = await _repository.Project.GetAllProjectsAsync(trackChanges);
 
             return projects;
         }
 
-        public Project GetProject(Guid projectId, bool trackChanges) => _repository.Project.GetProject(projectId, trackChanges);
+        public async Task<Project> GetProjectAsync(Guid projectId, bool trackChanges)
+        {
+            var project = await _repository.Project.GetProjectAsync(projectId, trackChanges);
+
+            if (project is null) throw new ProjectNotFoundException(projectId);
+
+            return project;
+        }
     }
 }

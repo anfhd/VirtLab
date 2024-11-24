@@ -1,5 +1,6 @@
 ﻿using Contracts;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,13 +17,13 @@ namespace Repository
             
         }
 
-        public IEnumerable<Project> GetAllProjects(bool trackChanges) =>
-           FindAll(trackChanges)
+        public async Task<IEnumerable<Project>> GetAllProjectsAsync(bool trackChanges) =>
+           await FindAll(trackChanges)
            .OrderBy(p => p.Name)
-           .ToList();
+           .ToListAsync();
 
-        public Project GetProject(Guid projectId, bool trackChanges) =>
-            FindByCondition(p => p.Id.Equals(projectId), trackChanges)
-            .SingleOrDefault();
+        public async Task<Project> GetProjectAsync(Guid projectId, bool trackChanges) =>
+            await FindByCondition(p => p.Id.Equals(projectId), trackChanges)
+            .SingleOrDefaultAsync();
     }
 }

@@ -9,8 +9,9 @@ namespace Services.Contracts
 {
     public interface ITeacherService
     {
-        IEnumerable<Teacher> GetAllTeachers(bool trackChanges);
-        Teacher GetTeacher(int teacherId, bool trackChanges);
+        Task<IEnumerable<Teacher>> GetAllTeachersAsync(bool trackChanges);
+        Task<Teacher> GetTeacherAsync(Guid teacherId, bool trackChanges);
         void CreateTeacher(Teacher teacher);
+        Task<IEnumerable<Course>> GetCoursesForTeacherAsync(Guid teacherId, bool trackChanges);
     }
 }

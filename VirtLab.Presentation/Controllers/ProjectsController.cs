@@ -17,11 +17,18 @@ namespace VirtLab.Presentation.Controllers
         public ProjectsController(IServiceManager service) => _service = service;
 
         [HttpGet]
-        public IActionResult GetProjects()
+        public async Task<IActionResult> GetProjects()
         {
-            var projects = _service.ProjectService.GetAllProjects(trackChanges: false);
+            var projects = await _service.ProjectService.GetAllProjectsAsync(trackChanges: false);
 
             return Ok(projects);
+        }
+
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetProject(Guid id)
+        {
+            var project = await _service.ProjectService.GetProjectAsync(id, trackChanges: false);
+            return Ok(project);
         }
     }
 }

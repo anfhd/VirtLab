@@ -9,6 +9,6 @@ namespace Contracts
 {
     public interface IGroupRepository
     {
-        IEnumerable<Group> GetAllGroups(bool trackChanges);
+        Task<IEnumerable<Group>> GetAllGroupsAsync(bool trackChanges);
     }
 }

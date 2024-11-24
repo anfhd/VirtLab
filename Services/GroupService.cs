@@ -20,9 +20,9 @@ namespace Services
             _logger = logger;
         }
 
-        public IEnumerable<Group> GetAllGroups(bool trackChanges)
+        public async Task<IEnumerable<Group>> GetAllGroupsAsync(bool trackChanges)
         {
-            var groups = _repository.Group.GetAllGroups(trackChanges);
+            var groups = await _repository.Group.GetAllGroupsAsync(trackChanges);
 
             return groups;
         }

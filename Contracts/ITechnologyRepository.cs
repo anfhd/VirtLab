@@ -9,6 +9,6 @@ namespace Contracts
 {
     public interface ITechnologyRepository
     {
-        IEnumerable<Technology> GetAllTechnologies(bool trackChanges);
+        Task<IEnumerable<Technology>> GetAllTechnologiesAsync(bool trackChanges);
     }
 }
