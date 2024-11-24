@@ -16,9 +16,15 @@ namespace Repository
             
         }
 
+        public void CreateStudent(Student student) => Create(student);
+
         public IEnumerable<Student> GetAllStudents(bool trackChanges) =>
            FindAll(trackChanges)
            .OrderBy(s => s.Id)
            .ToList();
+
+        public Student GetStudent(Guid studentId, bool trackChanges) =>
+            FindByCondition(s => s.Id.Equals(studentId), trackChanges)
+            .SingleOrDefault();
     }
 }

@@ -9,8 +9,14 @@ namespace Entities.Models
         public bool IsSentForReview { get; set; }
         public bool IsAccepted {  get; set; }
 
-        [ForeignKey("Owner")]
-        public Guid StudentId { get; set; }
-        public Student? Student { get; set; }
+        public Guid OwnerId { get; set; }
+        public Student? Owner { get; set; }
+
+        public Guid MarkId { get; set; }
+        public Mark? Mark { get; set; }
+
+        public virtual ICollection<Feedback>? Feedbacks { get; set; }
+        public virtual ICollection<Technology>? Technologies { get; set; }
+        public virtual ICollection<ProgrammingLanguage>? ProgrammingLanguages { get; set; }
     }
 }

@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Services.Contracts
 {
-    public interface IProjectService
+    public interface ICourseService
     {
-        IEnumerable<Project> GetAllProjects(bool trackChanges);
-        Project GetProject(Guid projectId, bool trackChanges);
+        IEnumerable<Course> GetAllCourses(bool trackChanges);
     }
 }

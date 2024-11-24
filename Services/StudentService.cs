@@ -20,20 +20,19 @@ namespace Services
             _logger = logger;
         }
 
+        public void CreateStudent(Student student)
+        {
+            _repository.Student.CreateStudent(student);
+            _repository.Save();
+        }
+
         public IEnumerable<Student> GetAllStudents(bool trackChanges)
         {
-            try
-            {
-                var students = _repository.Student.GetAllStudents(trackChanges);
+            var students = _repository.Student.GetAllStudents(trackChanges);
 
-                return students;
-            }
-            catch(Exception ex)
-            {
-                _logger.LogError($"Somehting went wrong in the {nameof(GetAllStudents)} service method {ex}");
-
-                throw;
-            }
+            return students;
         }
+
+        public Student GetStudent(Guid studentId, bool trackChanges) => _repository.Student.GetStudent(studentId, trackChanges);
     }
 }

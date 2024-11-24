@@ -19,16 +19,9 @@ namespace VirtLab.Presentation.Controllers
         [HttpGet]
         public IActionResult GetProgrammingLanguages()
         {
-            try
-            {
-                var programmingLanguages = _service.ProgrammingLanguageService.GetAllProgrammingLanguages(trackChanges: false);
+            var programmingLanguages = _service.ProgrammingLanguageService.GetAllProgrammingLanguages(trackChanges: false);
 
-                return Ok(programmingLanguages);
-            }
-            catch
-            {
-                return StatusCode(500, "Internal server error");
-            }
+            return Ok(programmingLanguages);
         }
         
     }

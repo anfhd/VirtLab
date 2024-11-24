@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Entities.Models
 {
-    public class Student
+    public class Teacher
     {
         public Guid Id { get; set; }
-        public virtual ICollection<Project>? Projects { get; set; }
+        public string UserId { get; set; }
+        public User? User { get; set; }
         public virtual ICollection<Course>? Courses { get; set; }
     }
 }

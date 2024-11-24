@@ -19,16 +19,9 @@ namespace VirtLab.Presentation.Controllers
         [HttpGet]
         public IActionResult GetTechnologies()
         {
-            try
-            {
-                var technologies = _service.TechnologyService.GetAllTechnologies(trackChanges: false);
+            var technologies = _service.TechnologyService.GetAllTechnologies(trackChanges: false);
 
-                return Ok(technologies);
-            }
-            catch
-            {
-                return StatusCode(500, "Internal server error");
-            }
+            return Ok(technologies);
         }
     }
 }
