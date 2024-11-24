@@ -20,5 +20,6 @@ namespace Entities.Models
         [ForeignKey("Project")]
         public Guid ProjectId { get; set; }
         public virtual Project? Project { get; set; }
+
     }
 }
