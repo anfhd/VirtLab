@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
@@ -11,9 +12,11 @@ using Repository;
 namespace VirtLab.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20241122175419_CreatingIdentityTables")]
+    partial class CreatingIdentityTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +37,7 @@ namespace VirtLab.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProgrammingLanguages", (string)null);
+                    b.ToTable("ProgrammingLanguages");
                 });
 
             modelBuilder.Entity("Entities.Models.Project", b =>
@@ -53,14 +56,14 @@ namespace VirtLab.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("OwnerId")
+                    b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("StudentId");
 
-                    b.ToTable("Projects", (string)null);
+                    b.ToTable("Projects");
                 });
 
             modelBuilder.Entity("Entities.Models.Student", b =>
@@ -71,7 +74,7 @@ namespace VirtLab.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Students", (string)null);
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("Entities.Models.Technology", b =>
@@ -86,7 +89,7 @@ namespace VirtLab.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Technologies", (string)null);
+                    b.ToTable("Technologies");
                 });
 
             modelBuilder.Entity("Entities.Models.User", b =>
@@ -297,13 +300,13 @@ namespace VirtLab.Migrations
 
             modelBuilder.Entity("Entities.Models.Project", b =>
                 {
-                    b.HasOne("Entities.Models.Student", "Owner")
+                    b.HasOne("Entities.Models.Student", "Student")
                         .WithMany("Projects")
-                        .HasForeignKey("OwnerId")
+                        .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Owner");
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

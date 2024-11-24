@@ -1,7 +1,9 @@
-﻿using Contracts;
+using Contracts;
+using Entities.Models;
 using LoggerService;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Repository;
+using Microsoft.EntityFrameworkCore;
 using Services;
 using Services.Contracts;
 
@@ -27,6 +29,20 @@ namespace VirtLab.Extensions
         public static void ConfigureLoggerService(this IServiceCollection services) =>
             services.AddSingleton<ILoggerManager, LoggerManager>();
 
+        public static void ConfigureIdentity(this IServiceCollection services)
+        {
+            var builder = services.AddIdentity<User, IdentityRole>(o =>
+            {
+                o.Password.RequireDigit = true;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequiredLength = 10;
+                o.User.RequireUniqueEmail = true;
+            })
+            .AddEntityFrameworkStores<RepositoryContext>()
+            .AddDefaultTokenProviders();
+        }
 
         public static void ConfigureRepositoryManager(this IServiceCollection services) =>
             services.AddScoped<IRepositoryManager, RepositoryManager>();

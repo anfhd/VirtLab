@@ -12,6 +12,9 @@ builder.Services.ConfigureCors();
 builder.Services.ConfigureIISIntegration();
 builder.Services.ConfigureLoggerService();
 
+builder.Services.AddAuthentication();
+builder.Services.ConfigureIdentity();
+
 // Add services to the container.
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
@@ -38,6 +41,7 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 });
 app.UseCors("CorsPolicy");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 //app.Use(async (context, next) =>
