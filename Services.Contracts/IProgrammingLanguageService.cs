@@ -9,6 +9,6 @@ namespace Services.Contracts
 {
     public interface IProgrammingLanguageService
     {
-        IEnumerable<ProgrammingLanguage> GetAllProgrammingLanguages(bool trackChanges);
+        Task<IEnumerable<ProgrammingLanguage>> GetAllProgrammingLanguagesAsync(bool trackChanges);
     }
 }

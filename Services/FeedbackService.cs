@@ -20,9 +20,9 @@ namespace Services
             _logger = logger;
         }
 
-        public IEnumerable<Feedback> GetFeedback(Guid projectId, bool trackChanges)
+        public async Task<IEnumerable<Feedback>> GetFeedbackAsync(Guid projectId, bool trackChanges)
         {
-            var feedback = _repository.Feedback.GetFeedback(projectId, trackChanges);
+            var feedback = await _repository.Feedback.GetFeedbackAsync(projectId, trackChanges);
 
             return feedback;
         }

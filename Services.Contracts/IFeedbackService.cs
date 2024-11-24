@@ -9,6 +9,6 @@ namespace Services.Contracts
 {
     public interface IFeedbackService
     {
-        IEnumerable<Feedback> GetFeedback(Guid projectId, bool trackChanges);
+        Task<IEnumerable<Feedback>> GetFeedbackAsync(Guid projectId, bool trackChanges);
     }
 }

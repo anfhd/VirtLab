@@ -17,9 +17,9 @@ namespace VirtLab.Presentation.Controllers
         public TechnologiesController(IServiceManager service) => _service = service;
 
         [HttpGet]
-        public IActionResult GetTechnologies()
+        public async Task<IActionResult> GetTechnologies()
         {
-            var technologies = _service.TechnologyService.GetAllTechnologies(trackChanges: false);
+            var technologies = await _service.TechnologyService.GetAllTechnologiesAsync(trackChanges: false);
 
             return Ok(technologies);
         }

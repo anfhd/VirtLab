@@ -9,6 +9,6 @@ namespace Services.Contracts
 {
     public interface ITechnologyService
     {
-        IEnumerable<Technology> GetAllTechnologies(bool trackChanges);
+        Task<IEnumerable<Technology>> GetAllTechnologiesAsync(bool trackChanges);
     }
 }

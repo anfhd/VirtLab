@@ -9,7 +9,7 @@ namespace Contracts
 {
     public interface IProjectRepository
     {
-        IEnumerable<Project> GetAllProjects(bool trackChanges);
-        Project GetProject(Guid projectId, bool trackChanges);
+        Task<IEnumerable<Project>> GetAllProjectsAsync(bool trackChanges);
+        Task<Project> GetProjectAsync(Guid projectId, bool trackChanges);
     }
 }

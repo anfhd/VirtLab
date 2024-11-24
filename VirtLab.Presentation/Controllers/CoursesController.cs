@@ -17,9 +17,9 @@ namespace VirtLab.Presentation.Controllers
         public CoursesController(IServiceManager service) => _service = service;
 
         [HttpGet]
-        public IActionResult GetCourses()
+        public async Task<IActionResult> GetCourses()
         {
-            var courses = _service.CourseService.GetAllCourses(trackChanges: false);
+            var courses = await _service.CourseService.GetAllCoursesAsync(trackChanges: false);
 
             return Ok(courses);
         }

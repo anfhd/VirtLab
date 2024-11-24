@@ -17,11 +17,27 @@ namespace VirtLab.Presentation.Controllers
         public TeachersController(IServiceManager service) => _service = service;
 
         [HttpGet]
-        public IActionResult GetTeachers()
+        public async Task<IActionResult> GetTeachers()
         {
-            var teachers = _service.TeacherService.GetAllTeachers(trackChanges: false);
+            var teachers = await _service.TeacherService.GetAllTeachersAsync(trackChanges: false);
 
             return Ok(teachers);
+        }
+
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetTeacher(Guid id)
+        {
+            var teacher = await _service.TeacherService.GetTeacherAsync(id, trackChanges: false);
+
+            return Ok(teacher);
+        }
+
+        [HttpGet("{id:guid}/courses")]
+        public async Task<IActionResult> GetTeacherCourses(Guid id)
+        {
+            var courses = await _service.TeacherService.GetCoursesForTeacherAsync(id, trackChanges: false);
+
+            return Ok(courses);
         }
     }
 }

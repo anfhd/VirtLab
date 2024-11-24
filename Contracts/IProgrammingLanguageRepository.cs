@@ -9,6 +9,6 @@ namespace Contracts
 {
     public interface IProgrammingLanguageRepository
     {
-        IEnumerable<ProgrammingLanguage> GetAllProgrammingLanguages(bool trackChanges);
+        Task<IEnumerable<ProgrammingLanguage>> GetAllProgrammingLanguagesAsync(bool trackChanges);
     }
 }

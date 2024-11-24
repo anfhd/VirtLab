@@ -9,6 +9,6 @@ namespace Services.Contracts
 {
     public interface IGroupService
     {
-        IEnumerable<Group> GetAllGroups(bool trackChanges);
+        Task<IEnumerable<Group>> GetAllGroupsAsync(bool trackChanges);
     }
 }

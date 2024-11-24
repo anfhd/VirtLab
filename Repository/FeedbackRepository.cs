@@ -1,5 +1,6 @@
 ﻿using Contracts;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,8 @@ namespace Repository
             
         }
 
-        public IEnumerable<Feedback> GetFeedback(Guid projectId, bool trackChanges) =>
-            FindByCondition(f => f.ProjectId.Equals(projectId), trackChanges)
-            .ToList();
+        public async Task<IEnumerable<Feedback>> GetFeedbackAsync(Guid projectId, bool trackChanges) =>
+            await FindByCondition(f => f.ProjectId.Equals(projectId), trackChanges)
+            .ToListAsync();
     }
 }

@@ -9,6 +9,7 @@ namespace Contracts
 {
     public interface ICourseRepository
     {
-        IEnumerable<Course> GetAllCourses(bool trackChanges);
+        Task<IEnumerable<Course>> GetAllCoursesAsync(bool trackChanges);
+
     }
 }

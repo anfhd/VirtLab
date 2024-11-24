@@ -1,5 +1,6 @@
 ﻿using Contracts;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +18,18 @@ namespace Repository
 
         public void CreateTeacher(Teacher teacher) => Create(teacher);
 
-        public IEnumerable<Teacher> GetAllTeachers(bool trackChanges) =>
-            FindAll(trackChanges)
-            .ToList();
+        public async Task<IEnumerable<Teacher>> GetAllTeachersAsync(bool trackChanges) =>
+            await FindAll(trackChanges)
+            .ToListAsync();
 
-        public Teacher GetTeacher(int teacherId, bool trackChanges) =>
-            FindByCondition(t => t.Id.Equals(teacherId), trackChanges)
-            .SingleOrDefault();
+        public async Task<IEnumerable<Course>> GetCoursesForTeacherAsync(Guid teacherId, bool trackChanges) =>
+            await FindByCondition(t => t.Id.Equals(teacherId), trackChanges)
+            .Include(s => s.Courses)
+            .SelectMany(s => s.Courses)
+            .ToListAsync();
+
+        public async Task<Teacher> GetTeacherAsync(Guid teacherId, bool trackChanges) =>
+            await FindByCondition(t => t.Id.Equals(teacherId), trackChanges)
+            .SingleOrDefaultAsync();
     }
 }

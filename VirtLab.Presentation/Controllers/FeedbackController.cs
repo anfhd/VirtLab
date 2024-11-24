@@ -16,6 +16,12 @@ namespace VirtLab.Presentation.Controllers
 
         public FeedbackController(IServiceManager service) => _service = service;
 
-       
+        [HttpGet("{id:guid}")]
+        public async Task<IActionResult> GetFeedback(Guid id)
+        {
+            var feedback = await _service.FeedbackService.GetFeedbackAsync(id, trackChanges: false);
+
+            return Ok(feedback);
+        }
     }
 }

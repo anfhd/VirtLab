@@ -20,9 +20,9 @@ namespace Services
             _logger = logger;
         }
 
-        public IEnumerable<Technology> GetAllTechnologies(bool trackChanges)
+        public async Task<IEnumerable<Technology>> GetAllTechnologiesAsync(bool trackChanges)
         {
-            var technologies = _repository.Technology.GetAllTechnologies(trackChanges);
+            var technologies = await _repository.Technology.GetAllTechnologiesAsync(trackChanges);
 
             return technologies;
         }

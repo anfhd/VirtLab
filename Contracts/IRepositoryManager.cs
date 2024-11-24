@@ -17,6 +17,6 @@ namespace Contracts
         ICourseRepository Course { get; }
         IFeedbackRepository Feedback { get; }
 
-        void Save();
+        Task SaveAsync();
     }
 }

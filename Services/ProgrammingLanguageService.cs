@@ -20,9 +20,9 @@ namespace Services
             _logger = logger;
         }
 
-        public IEnumerable<ProgrammingLanguage> GetAllProgrammingLanguages(bool trackChanges)
+        public async Task<IEnumerable<ProgrammingLanguage>> GetAllProgrammingLanguagesAsync(bool trackChanges)
         {
-            var programmingLanguages = _repository.ProgrammingLanguage.GetAllProgrammingLanguages(trackChanges);
+            var programmingLanguages = await _repository.ProgrammingLanguage.GetAllProgrammingLanguagesAsync(trackChanges);
 
             return programmingLanguages;
         }
