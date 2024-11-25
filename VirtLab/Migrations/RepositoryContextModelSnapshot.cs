@@ -150,6 +150,9 @@ namespace VirtLab.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("TeacherId")
                         .HasColumnType("uniqueidentifier");
 
@@ -157,6 +160,9 @@ namespace VirtLab.Migrations
                         .HasColumnType("real");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProjectId")
+                        .IsUnique();
 
                     b.HasIndex("TeacherId");
 
@@ -211,8 +217,6 @@ namespace VirtLab.Migrations
                     b.HasIndex("AssignmentId");
 
                     b.HasIndex("DeadlineId");
-
-                    b.HasIndex("MarkId");
 
                     b.HasIndex("OwnerId");
 
@@ -588,11 +592,19 @@ namespace VirtLab.Migrations
 
             modelBuilder.Entity("Entities.Models.Mark", b =>
                 {
+                    b.HasOne("Entities.Models.Project", "Project")
+                        .WithOne("Mark")
+                        .HasForeignKey("Entities.Models.Mark", "ProjectId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Entities.Models.Teacher", "Teacher")
                         .WithMany()
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Project");
 
                     b.Navigation("Teacher");
                 });
@@ -611,12 +623,6 @@ namespace VirtLab.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entities.Models.Mark", "Mark")
-                        .WithMany()
-                        .HasForeignKey("MarkId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("Entities.Models.Student", "Owner")
                         .WithMany("OwnedProjects")
                         .HasForeignKey("OwnerId")
@@ -626,8 +632,6 @@ namespace VirtLab.Migrations
                     b.Navigation("Assignment");
 
                     b.Navigation("Deadline");
-
-                    b.Navigation("Mark");
 
                     b.Navigation("Owner");
                 });
@@ -778,6 +782,8 @@ namespace VirtLab.Migrations
             modelBuilder.Entity("Entities.Models.Project", b =>
                 {
                     b.Navigation("Feedbacks");
+
+                    b.Navigation("Mark");
                 });
 
             modelBuilder.Entity("Entities.Models.Student", b =>

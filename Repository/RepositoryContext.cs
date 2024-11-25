@@ -27,10 +27,22 @@ namespace Repository
                       .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(p => p.Mark)
-                      .WithMany()
-                      .HasForeignKey(p => p.MarkId)
+                      .WithOne(m => m.Project) // У Mark є відповідна навігаційна властивість
+                      .HasForeignKey<Project>(p => p.MarkId) // Foreign Key знаходиться в Project
                       .OnDelete(DeleteBehavior.Restrict);
             });
+
+            modelBuilder.Entity<Mark>(entity =>
+            {
+                // Встановлюємо первинний ключ
+                entity.HasKey(m => m.Id);
+
+                entity.HasOne(m => m.Project)
+                      .WithOne(p => p.Mark) // Assuming Project has a single Mark
+                      .HasForeignKey<Mark>(m => m.ProjectId) // Foreign Key знаходиться у Mark
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
 
             modelBuilder.Entity<Student>(entity =>
             {
