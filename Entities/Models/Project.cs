@@ -8,6 +8,7 @@ namespace Entities.Models
         public string Name { get; set; }
         public bool IsSentForReview { get; set; }
         public bool IsAccepted {  get; set; }
+        //public bool IsDeleted { get; set; }
 
         public Guid OwnerId { get; set; }
         public Student? Owner { get; set; }
