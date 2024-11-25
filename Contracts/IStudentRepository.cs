@@ -15,5 +15,6 @@ namespace Contracts
         Task<IEnumerable<Course>> GetCoursesForStudentAsync(Guid studentId, bool trackChanges);
         Task<IEnumerable<Project>> GetStudentOwnedProjectsAsync(Guid studentId, bool trackChanges);
         Task<IEnumerable<Project>> GetStudentParticipatedProjectsAsync(Guid studentId, bool trackChanges);
+        Task<IEnumerable<Assignment>> GetStudentAssignmentsAsync(Guid studentId, bool trackChanges);
     }
 }

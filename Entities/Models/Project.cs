@@ -19,8 +19,7 @@ namespace Entities.Models
         public Guid AssignmentId { get; set; }
         public virtual Assignment? Assignment { get; set; }
 
-        public Guid DeadlineId { get; set; }
-        public Deadline? Deadline { get; set; }
+      
 
         public virtual ICollection<Feedback>? Feedbacks { get; set; }
         public virtual ICollection<Technology>? Technologies { get; set; }

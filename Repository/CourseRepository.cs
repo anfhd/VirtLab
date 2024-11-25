@@ -22,14 +22,21 @@ namespace Repository
             .OrderBy(c => c.Name)
             .ToListAsync();
 
-        public async Task<Course> GetCourse(Guid courseId, bool trackChanges) =>
+        public async Task<Course> GetCourseAsync(Guid courseId, bool trackChanges) =>
              await FindByCondition(c => c.Id.Equals(courseId), trackChanges)
             .SingleOrDefaultAsync();
 
-        public async Task<IEnumerable<Assignment>> GetCourseAssignments(Guid courseId, bool trackChanges) =>
+        public async Task<IEnumerable<Assignment>> GetCourseAssignmentsAsync(Guid courseId, bool trackChanges) =>
             await FindByCondition(c => c.Id.Equals(courseId), trackChanges)
             .Include(c => c.Assignments)
             .SelectMany(c => c.Assignments)
             .ToListAsync();
+
+        public async Task<Assignment> GetAssignmentAsync(Guid courseId, Guid assignmentId, bool trackChanges) =>
+             await FindByCondition(c => c.Id.Equals(courseId), trackChanges)
+            .Include(c => c.Assignments)
+            .SelectMany(c => c.Assignments)
+            .SingleOrDefaultAsync(a => a.Id == assignmentId);
+
     }
 }

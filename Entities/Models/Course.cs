@@ -12,7 +12,7 @@ namespace Entities.Models
         public Guid TeacherId { get; set; }
         public Teacher? Teacher { get; set; }
 
-        public virtual ICollection<Student>? Students { get; set; }
+        public virtual ICollection<Group>? Groups { get; set; }
         public virtual ICollection<Assignment>? Assignments { get; set; }
 
     }

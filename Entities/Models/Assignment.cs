@@ -13,6 +13,9 @@ namespace Entities.Models
         public string? Name { get; set; }
         public string? Description { get; set; }
 
+        public Guid DeadlineId { get; set; }
+        public Deadline? Deadline { get; set; }
+
         [ForeignKey("Course")]
         public Guid CourseId { get; set; }
         public Course? Course { get; set; }

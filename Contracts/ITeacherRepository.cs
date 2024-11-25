@@ -13,5 +13,6 @@ namespace Contracts
         Task<Teacher> GetTeacherAsync(Guid teacherId, bool trackChanges);
         void CreateTeacher(Teacher teacher);
         Task<IEnumerable<Course>> GetCoursesForTeacherAsync(Guid teacherId, bool trackChanges);
+        Task<IEnumerable<Project>> GeProjectsForTeacherAsync(Guid teacherId, bool trackChanges);
     }
 }
