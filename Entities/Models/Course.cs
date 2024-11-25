@@ -5,6 +5,7 @@ namespace Entities.Models
     public class Course
     {
         public Guid Id { get; set; }
+
         public string Name { get; set; }
 
         [ForeignKey("Teacher")]
@@ -13,5 +14,6 @@ namespace Entities.Models
 
         public virtual ICollection<Student>? Students { get; set; }
         public virtual ICollection<Assignment>? Assignments { get; set; }
+
     }
 }
