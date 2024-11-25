@@ -46,7 +46,7 @@ namespace Repository
                       .HasForeignKey(s => s.GroupId)
                       .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasMany(s => s.Projects)
+                entity.HasMany(s => s.OwnedProjects)
                       .WithOne(p => p.Owner)
                       .HasForeignKey(p => p.OwnerId)
                       .OnDelete(DeleteBehavior.Restrict);
