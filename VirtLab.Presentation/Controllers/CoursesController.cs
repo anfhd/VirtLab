@@ -27,9 +27,17 @@ namespace VirtLab.Presentation.Controllers
         [HttpGet("{id:guid}/assignments")]
         public async Task<IActionResult> GetCourseAssignments(Guid id)
         {
-            var courseAssignments = await _service.CourseService.GetCourseAssignments(id, trackChanges: false);
+            var courseAssignments = await _service.CourseService.GetCourseAssignmentsAsync(id, trackChanges: false);
 
             return Ok(courseAssignments);
+        }
+
+        [HttpGet("{courseId:guid}/assignments/{assignmentId:guid}")]
+        public async Task<IActionResult> GetAssignment(Guid courseId, Guid assignmentId)
+        {
+            var assignment = await _service.CourseService.GetAssignmentAsync(courseId, assignmentId, trackChanges: false);
+
+            return Ok(assignment);
         }
     }
 }

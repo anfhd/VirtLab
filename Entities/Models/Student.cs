@@ -20,6 +20,5 @@ namespace Entities.Models
         public virtual ICollection<Project>? OwnedProjects { get; set; }
         // Проєкти, в яких студент бере участь
         public virtual ICollection<Project>? ParticipatedProjects { get; set; }
-        public virtual ICollection<Course>? Courses { get; set; }
     }
 }

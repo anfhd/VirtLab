@@ -85,5 +85,16 @@ namespace Services
 
             return student;
         }
+
+        public async Task<IEnumerable<Assignment>> GetStudentAssignmentsAsync(Guid studentId, bool trackChanges)
+        {
+            var student = await _repository.Student.GetStudentAsync(studentId, trackChanges);
+
+            if (student is null) throw new StudentNotFoundException(studentId);
+
+            var studentAssignments = await _repository.Student.GetStudentAssignmentsAsync(studentId, trackChanges);
+
+            return studentAssignments;
+        }
     }
 }

@@ -21,4 +21,8 @@
     <ProjectReference Include="..\VirtLab.Presentation\VirtLab.Presentation.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

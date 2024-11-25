@@ -27,6 +27,17 @@ namespace Services
             await _repository.SaveAsync();
         }
 
+        public async Task<IEnumerable<Project>> GetProjectsForTeacherAsync(Guid teacherId, bool trackChanges)
+        {
+            var teacher = await _repository.Teacher.GetTeacherAsync(teacherId, trackChanges);
+
+            if (teacher is null) throw new TeacherNotFoundException(teacherId);
+
+            var projects = await _repository.Teacher.GeProjectsForTeacherAsync(teacherId, trackChanges);
+
+            return projects;
+        }
+
         public async Task<IEnumerable<Teacher>> GetAllTeachersAsync(bool trackChanges)
         {
             var teachers = await _repository.Teacher.GetAllTeachersAsync(trackChanges);

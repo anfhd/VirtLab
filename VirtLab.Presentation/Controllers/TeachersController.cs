@@ -39,5 +39,13 @@ namespace VirtLab.Presentation.Controllers
 
             return Ok(courses);
         }
+
+        [HttpGet("{id:guid}/projects")]
+        public async Task<IActionResult> GetTeacherProjects(Guid id)
+        {
+            var projects = await _service.TeacherService.GetProjectsForTeacherAsync(id, trackChanges: false);
+
+            return Ok(projects);
+        }
     }
 }

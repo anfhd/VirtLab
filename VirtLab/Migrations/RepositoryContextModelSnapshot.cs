@@ -22,19 +22,19 @@ namespace VirtLab.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CourseStudent", b =>
+            modelBuilder.Entity("CourseGroup", b =>
                 {
                     b.Property<Guid>("CoursesId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("StudentsId")
+                    b.Property<Guid>("GroupsId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("CoursesId", "StudentsId");
+                    b.HasKey("CoursesId", "GroupsId");
 
-                    b.HasIndex("StudentsId");
+                    b.HasIndex("GroupsId");
 
-                    b.ToTable("CourseStudent");
+                    b.ToTable("CourseGroup");
                 });
 
             modelBuilder.Entity("Entities.Models.Assignment", b =>
@@ -44,6 +44,9 @@ namespace VirtLab.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CourseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("DeadlineId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
@@ -56,6 +59,8 @@ namespace VirtLab.Migrations
 
                     b.HasIndex("CourseId");
 
+                    b.HasIndex("DeadlineId");
+
                     b.ToTable("Assignment");
                 });
 
@@ -63,9 +68,6 @@ namespace VirtLab.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("GroupId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -76,8 +78,6 @@ namespace VirtLab.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GroupId");
 
                     b.HasIndex("TeacherId");
 
@@ -187,10 +187,10 @@ namespace VirtLab.Migrations
                     b.Property<Guid>("AssignmentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("DeadlineId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<bool>("IsAccepted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsSentForReview")
@@ -209,8 +209,6 @@ namespace VirtLab.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AssignmentId");
-
-                    b.HasIndex("DeadlineId");
 
                     b.HasIndex("MarkId");
 
@@ -526,7 +524,7 @@ namespace VirtLab.Migrations
                     b.ToTable("ProjectTechnology");
                 });
 
-            modelBuilder.Entity("CourseStudent", b =>
+            modelBuilder.Entity("CourseGroup", b =>
                 {
                     b.HasOne("Entities.Models.Course", null)
                         .WithMany()
@@ -534,9 +532,9 @@ namespace VirtLab.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entities.Models.Student", null)
+                    b.HasOne("Entities.Models.Group", null)
                         .WithMany()
-                        .HasForeignKey("StudentsId")
+                        .HasForeignKey("GroupsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -549,15 +547,19 @@ namespace VirtLab.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Entities.Models.Deadline", "Deadline")
+                        .WithMany()
+                        .HasForeignKey("DeadlineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Course");
+
+                    b.Navigation("Deadline");
                 });
 
             modelBuilder.Entity("Entities.Models.Course", b =>
                 {
-                    b.HasOne("Entities.Models.Group", null)
-                        .WithMany("Courses")
-                        .HasForeignKey("GroupId");
-
                     b.HasOne("Entities.Models.Teacher", "Teacher")
                         .WithMany("Courses")
                         .HasForeignKey("TeacherId")
@@ -605,12 +607,6 @@ namespace VirtLab.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Entities.Models.Deadline", "Deadline")
-                        .WithMany()
-                        .HasForeignKey("DeadlineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Entities.Models.Mark", "Mark")
                         .WithMany()
                         .HasForeignKey("MarkId")
@@ -624,8 +620,6 @@ namespace VirtLab.Migrations
                         .IsRequired();
 
                     b.Navigation("Assignment");
-
-                    b.Navigation("Deadline");
 
                     b.Navigation("Mark");
 
@@ -770,8 +764,6 @@ namespace VirtLab.Migrations
 
             modelBuilder.Entity("Entities.Models.Group", b =>
                 {
-                    b.Navigation("Courses");
-
                     b.Navigation("Students");
                 });
 
