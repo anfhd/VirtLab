@@ -21,5 +21,15 @@ namespace Repository
             await FindAll(trackChanges)
             .OrderBy(c => c.Name)
             .ToListAsync();
+
+        public async Task<Course> GetCourse(Guid courseId, bool trackChanges) =>
+             await FindByCondition(c => c.Id.Equals(courseId), trackChanges)
+            .SingleOrDefaultAsync();
+
+        public async Task<IEnumerable<Assignment>> GetCourseAssignments(Guid courseId, bool trackChanges) =>
+            await FindByCondition(c => c.Id.Equals(courseId), trackChanges)
+            .Include(c => c.Assignments)
+            .SelectMany(c => c.Assignments)
+            .ToListAsync();
     }
 }

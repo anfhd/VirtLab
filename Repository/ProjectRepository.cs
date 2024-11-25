@@ -25,5 +25,17 @@ namespace Repository
         public async Task<Project> GetProjectAsync(Guid projectId, bool trackChanges) =>
             await FindByCondition(p => p.Id.Equals(projectId), trackChanges)
             .SingleOrDefaultAsync();
+
+        public async Task<IEnumerable<ProgrammingLanguage>> GetProjectLanguagesAsync(Guid projectId, bool trackChanges) =>
+             await FindByCondition(p => p.Id.Equals(projectId), trackChanges)
+            .Include(p => p.ProgrammingLanguages)
+            .SelectMany(p => p.ProgrammingLanguages)
+            .ToListAsync();
+
+        public async Task<IEnumerable<Technology>> GetProjectTechnologiesAsync(Guid projectId, bool trackChanges) =>
+             await FindByCondition(p => p.Id.Equals(projectId), trackChanges)
+            .Include(p => p.Technologies)
+            .SelectMany(p => p.Technologies)
+            .ToListAsync();
     }
 }

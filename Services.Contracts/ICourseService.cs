@@ -10,5 +10,7 @@ namespace Services.Contracts
     public interface ICourseService
     {
         Task<IEnumerable<Course>> GetAllCoursesAsync(bool trackChanges);
+        Task<IEnumerable<Assignment>> GetCourseAssignments(Guid courseId, bool trackChanges);
+        Task<Course> GetCourse(Guid courseId, bool trackChanges);
     }
 }

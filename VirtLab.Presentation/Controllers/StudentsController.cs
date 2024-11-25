@@ -38,5 +38,29 @@ namespace VirtLab.Presentation.Controllers
 
             return Ok(courses);
         }
+
+        [HttpGet("{id:guid}/ownedProjects")]
+        public async Task<IActionResult> GetStudentOwnedProjects(Guid id)
+        {
+            var projects = await _service.StudentService.GetOwnedStudentProjectsAsync(id, trackChanges: false);
+
+            return Ok(projects);
+        }
+
+        [HttpGet("{id:guid}/participatedProjects")]
+        public async Task<IActionResult> GetStudentParticipatedProjects(Guid id)
+        {
+            var projects = await _service.StudentService.GetParticipatedStudentProjectsAsync(id, trackChanges: false);
+
+            return Ok(projects);
+        }
+
+        [HttpGet("{id:guid}/allProjects")]
+        public async Task<IActionResult> GetStudentProjects(Guid id)
+        {
+            var projects = await _service.StudentService.GetAllStudentProjectsAsync(id, trackChanges: false);
+
+            return Ok(projects);
+        }
     }
 }

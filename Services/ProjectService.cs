@@ -36,5 +36,27 @@ namespace Services
 
             return project;
         }
+
+        public async Task<IEnumerable<ProgrammingLanguage>> GetProjectLanguagesAsync(Guid projectId, bool trackChanges)
+        {
+            var project = await _repository.Project.GetProjectAsync(projectId, trackChanges);
+
+            if (project is null) throw new ProjectNotFoundException(projectId);
+
+            var programmingLanguages = await _repository.Project.GetProjectLanguagesAsync(projectId, trackChanges);
+
+            return programmingLanguages;
+        }
+
+        public async Task<IEnumerable<Technology>> GetProjectTechnologiesAsync(Guid projectId, bool trackChanges)
+        {
+            var project = await _repository.Project.GetProjectAsync(projectId, trackChanges);
+
+            if (project is null) throw new ProjectNotFoundException(projectId);
+
+            var technologies = await _repository.Project.GetProjectTechnologiesAsync(projectId, trackChanges);
+
+            return technologies;
+        }
     }
 }
