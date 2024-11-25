@@ -13,8 +13,8 @@ namespace Entities.Models
     {
         public Guid Id { get; set; }
         public float Value { get; set; }
-
-        [ForeignKey("Teacher")]
+        public Guid ProjectId { get; set; }
+        public Project? Project { get; set; }
         public Guid TeacherId { get; set; }
         public Teacher? Teacher { get; set; }
     }
