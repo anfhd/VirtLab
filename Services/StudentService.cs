@@ -27,6 +27,38 @@ namespace Services
             await _repository.SaveAsync();
         }
 
+        public async Task<IEnumerable<Project>> GetAllStudentProjectsAsync(Guid studentId, bool trackChanges)
+        {
+            var student = await _repository.Student.GetStudentAsync(studentId, trackChanges);
+
+            if (student is null) throw new StudentNotFoundException(studentId);
+
+            var ownedProjects = await _repository.Student.GetStudentOwnedProjectsAsync(studentId, trackChanges);
+            var participatedProjects = await _repository.Student.GetStudentParticipatedProjectsAsync(studentId, trackChanges);
+
+            return ownedProjects.Concat(participatedProjects).Distinct();
+        }
+        public async Task<IEnumerable<Project>> GetOwnedStudentProjectsAsync(Guid studentId, bool trackChanges)
+        {
+            var student = await _repository.Student.GetStudentAsync(studentId, trackChanges);
+
+            if (student is null) throw new StudentNotFoundException(studentId);
+
+            var ownedProjects = await _repository.Student.GetStudentOwnedProjectsAsync(studentId, trackChanges);
+            
+            return ownedProjects;
+        }
+        public async Task<IEnumerable<Project>> GetParticipatedStudentProjectsAsync(Guid studentId, bool trackChanges)
+        {
+            var student = await _repository.Student.GetStudentAsync(studentId, trackChanges);
+
+            if (student is null) throw new StudentNotFoundException(studentId);
+
+            var participatedProjects = await _repository.Student.GetStudentParticipatedProjectsAsync(studentId, trackChanges);
+
+            return participatedProjects;
+        }
+
         public async Task<IEnumerable<Student>> GetAllStudentsAsync(bool trackChanges)
         {
             var students = await _repository.Student.GetAllStudentsAsync(trackChanges);

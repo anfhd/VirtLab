@@ -30,5 +30,21 @@ namespace VirtLab.Presentation.Controllers
             var project = await _service.ProjectService.GetProjectAsync(id, trackChanges: false);
             return Ok(project);
         }
+
+        [HttpGet("{id:guid}/technologies")]
+        public async Task<IActionResult> GetProjectTechnologies(Guid id)
+        {
+            var projectTechnologies = await _service.ProjectService.GetProjectTechnologiesAsync(id, trackChanges: false);
+
+            return Ok(projectTechnologies);
+        }
+
+        [HttpGet("{id:guid}/programmingLanguages")]
+        public async Task<IActionResult> GetProjectProgrammingLanguages(Guid id)
+        {
+            var projectProgrammingLanguages = await _service.ProjectService.GetProjectLanguagesAsync(id, trackChanges: false);
+
+            return Ok(projectProgrammingLanguages);
+        }
     }
 }

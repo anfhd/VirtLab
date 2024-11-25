@@ -13,6 +13,7 @@ namespace Entities.Models
         public Teacher? Teacher { get; set; }
 
         public virtual ICollection<Student>? Students { get; set; }
+        public virtual ICollection<Assignment>? Assignments { get; set; }
 
     }
 }
