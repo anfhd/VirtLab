@@ -26,13 +26,15 @@ public class AuthenticationController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        if(userForRegistration.Roles.Contains("Student"))
+        var baseUser = await _service.AuthenticationService.GetUser(userForRegistration.Email);
+
+        if (userForRegistration.Roles.Contains("Student"))
         {
-            _service.StudentService.CreateStudent(userForRegistration);
+            await _service.StudentService.CreateStudentAsync(userForRegistration, baseUser);
         }
         else if(userForRegistration.Roles.Contains("Teacher"))
         {
-            _service.TeacherService.CreateTeacher(userForRegistration);
+            await _service.TeacherService.CreateTeacherAsync(userForRegistration, baseUser);
         }
 
         return StatusCode(201);

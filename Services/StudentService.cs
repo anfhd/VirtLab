@@ -23,16 +23,19 @@ namespace Services
             _mapper = mapper;
         }
 
-        public async Task CreateStudent(Student student)
+        public async Task CreateStudentAsync(Student student)
         {
-            _repository.Student.CreateStudent(student);
+            await _repository.Student.CreateStudentAsync(student);
             await _repository.SaveAsync();
         }
 
-        public async Task CreateStudent(UserForRegistrationDto user)
+        public async Task CreateStudentAsync(UserForRegistrationDto user, User baseUser)
         {
             var student = _mapper.Map<Student>(user);
-            _repository.Student.CreateStudent(student);
+            student.User = baseUser;
+            student.UserId = baseUser.Id;
+
+           await _repository.Student.CreateStudentAsync(student);
             await _repository.SaveAsync();
         }
 
