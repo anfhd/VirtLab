@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Services.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace VirtLab.Presentation.Controllers
 {
@@ -14,7 +9,8 @@ namespace VirtLab.Presentation.Controllers
     {
         private readonly IServiceManager _service;
 
-        public ProjectsController(IServiceManager service) => _service = service;
+        public ProjectsController(IServiceManager service)
+            => _service = service;
 
         [HttpGet]
         public async Task<IActionResult> GetProjects()

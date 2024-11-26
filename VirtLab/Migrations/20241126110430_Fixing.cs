@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VirtLab.Migrations
 {
     /// <inheritdoc />
-    public partial class ChangedEntities : Migration
+    public partial class Fixing : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -256,42 +256,17 @@ namespace VirtLab.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    GroupId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    TeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Courses", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Courses_Groups_GroupId",
-                        column: x => x.GroupId,
-                        principalTable: "Groups",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Courses_Teacher_TeacherId",
                         column: x => x.TeacherId,
                         principalTable: "Teacher",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Marks",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Value = table.Column<float>(type: "real", nullable: false),
-                    TeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Marks", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Marks_Teacher_TeacherId",
-                        column: x => x.TeacherId,
-                        principalTable: "Teacher",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -322,25 +297,25 @@ namespace VirtLab.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CourseStudent",
+                name: "CourseGroup",
                 columns: table => new
                 {
                     CoursesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    StudentsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    GroupsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CourseStudent", x => new { x.CoursesId, x.StudentsId });
+                    table.PrimaryKey("PK_CourseGroup", x => new { x.CoursesId, x.GroupsId });
                     table.ForeignKey(
-                        name: "FK_CourseStudent_Courses_CoursesId",
+                        name: "FK_CourseGroup_Courses_CoursesId",
                         column: x => x.CoursesId,
                         principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CourseStudent_Student_StudentsId",
-                        column: x => x.StudentsId,
-                        principalTable: "Student",
+                        name: "FK_CourseGroup_Groups_GroupsId",
+                        column: x => x.GroupsId,
+                        principalTable: "Groups",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -353,6 +328,7 @@ namespace VirtLab.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsSentForReview = table.Column<bool>(type: "bit", nullable: false),
                     IsAccepted = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     MarkId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AssignmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
@@ -366,12 +342,6 @@ namespace VirtLab.Migrations
                         principalTable: "Assignment",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Projects_Marks_MarkId",
-                        column: x => x.MarkId,
-                        principalTable: "Marks",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Projects_Student_OwnerId",
                         column: x => x.OwnerId,
@@ -401,6 +371,32 @@ namespace VirtLab.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Feedbacks_Teacher_TeacherId",
+                        column: x => x.TeacherId,
+                        principalTable: "Teacher",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Marks",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Value = table.Column<float>(type: "real", nullable: false),
+                    ProjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TeacherId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Marks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Marks_Projects_ProjectId",
+                        column: x => x.ProjectId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Marks_Teacher_TeacherId",
                         column: x => x.TeacherId,
                         principalTable: "Teacher",
                         principalColumn: "Id",
@@ -529,19 +525,14 @@ namespace VirtLab.Migrations
                 column: "DeadlineId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_GroupId",
-                table: "Courses",
-                column: "GroupId");
+                name: "IX_CourseGroup_GroupsId",
+                table: "CourseGroup",
+                column: "GroupsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Courses_TeacherId",
                 table: "Courses",
                 column: "TeacherId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CourseStudent_StudentsId",
-                table: "CourseStudent",
-                column: "StudentsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Feedbacks_ProjectId",
@@ -552,6 +543,12 @@ namespace VirtLab.Migrations
                 name: "IX_Feedbacks_TeacherId",
                 table: "Feedbacks",
                 column: "TeacherId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Marks_ProjectId",
+                table: "Marks",
+                column: "ProjectId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Marks_TeacherId",
@@ -572,11 +569,6 @@ namespace VirtLab.Migrations
                 name: "IX_Projects_AssignmentId",
                 table: "Projects",
                 column: "AssignmentId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Projects_MarkId",
-                table: "Projects",
-                column: "MarkId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Projects_OwnerId",
@@ -625,10 +617,13 @@ namespace VirtLab.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CourseStudent");
+                name: "CourseGroup");
 
             migrationBuilder.DropTable(
                 name: "Feedbacks");
+
+            migrationBuilder.DropTable(
+                name: "Marks");
 
             migrationBuilder.DropTable(
                 name: "ProgrammingLanguageProject");
@@ -653,9 +648,6 @@ namespace VirtLab.Migrations
 
             migrationBuilder.DropTable(
                 name: "Assignment");
-
-            migrationBuilder.DropTable(
-                name: "Marks");
 
             migrationBuilder.DropTable(
                 name: "Student");
