@@ -17,7 +17,7 @@ namespace Repository
             
         }
 
-        public void CreateStudent(Student student) => Create(student);
+        public async Task CreateStudentAsync(Student student) => Create(student);
 
 
         public async Task<IEnumerable<Student>> GetAllStudentsAsync(bool trackChanges) =>
