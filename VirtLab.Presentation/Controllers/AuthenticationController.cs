@@ -32,7 +32,8 @@ public class AuthenticationController : ControllerBase
         }
         else if(userForRegistration.Roles.Contains("Teacher"))
         {
-            _service.TeacherService.CreateTeacher(userForRegistration);
+            var baseUser = await _service.AuthenticationService.GetUser(userForRegistration.Email);
+            await _service.TeacherService.CreateTeacherAsync(userForRegistration, baseUser);
         }
 
         return StatusCode(201);

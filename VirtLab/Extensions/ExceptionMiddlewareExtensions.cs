@@ -28,7 +28,7 @@ namespace VirtLab.Extensions
                         await context.Response.WriteAsync(new ErrorDetails()
                         {
                             StatusCode = context.Response.StatusCode,
-                            Message = contextFeature.Error.Message,
+                            Message = contextFeature.Error.Message + "\n" + contextFeature.Error.InnerException,
                         }.ToString());
                     }
                 });
