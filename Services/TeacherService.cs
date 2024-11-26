@@ -1,4 +1,6 @@
-﻿using Contracts;
+﻿using AutoMapper;
+using Contracts;
+using Entities.DTO;
 using Entities.Exceptions;
 using Entities.Models;
 using Services.Contracts;
@@ -14,15 +16,28 @@ namespace Services
     {
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
+        private readonly IMapper _mapper;
 
-        public TeacherService(IRepositoryManager repository, ILoggerManager logger)
+        public TeacherService(
+            IRepositoryManager repository,
+            ILoggerManager logger,
+            IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
+            _mapper = mapper;
         }
 
         public async void CreateTeacher(Teacher teacher)
         {
+            _repository.Teacher.CreateTeacher(teacher);
+            await _repository.SaveAsync();
+        }
+
+        public async void CreateTeacher(UserForRegistrationDto user)
+        {
+            var teacher = _mapper.Map<Teacher>(user);
+
             _repository.Teacher.CreateTeacher(teacher);
             await _repository.SaveAsync();
         }
@@ -63,6 +78,16 @@ namespace Services
             if(teacher is null) throw new TeacherNotFoundException(teacherId);
 
             return teacher;
+        }
+
+        public IEnumerable<Teacher> GetAllTeachers(bool trackChanges)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Teacher GetTeacher(int teacherId, bool trackChanges)
+        {
+            throw new NotImplementedException();
         }
     }
 }

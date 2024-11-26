@@ -1,4 +1,8 @@
-﻿using Contracts;
+﻿using AutoMapper;
+using Contracts;
+using Entities.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Services.Contracts;
 using System;
 using System.Collections.Generic;
@@ -17,16 +21,22 @@ namespace Services
         private readonly Lazy<ICourseService> _courseService;
         private readonly Lazy<IGroupService> _groupService;
         private readonly Lazy<ITeacherService> _teacherService;
-        private readonly Lazy<FeedbackService> _feedbackService;
+        private readonly Lazy<IFeedbackService> _feedbackService;
+        private readonly Lazy<IAuthenticationService> _authenticationService;
 
-        public ServiceManager(IRepositoryManager repositoryManager, ILoggerManager logger)
+        public ServiceManager(
+            IRepositoryManager repositoryManager,
+            ILoggerManager logger,
+            IMapper mapper,
+            UserManager<User> userManager
+            )
         {
             _languageService = new Lazy<IProgrammingLanguageService>(() 
                 => new ProgrammingLanguageService(repositoryManager, logger));
             _projectService = new Lazy<IProjectService>(()
                 => new ProjectService(repositoryManager, logger));
             _studentService = new Lazy<IStudentService>(()
-                => new StudentService(repositoryManager, logger));
+                => new StudentService(repositoryManager, logger, mapper));
             _technologyService = new Lazy<ITechnologyService>(()
                 => new TechnologyService(repositoryManager, logger));
             _courseService = new Lazy<ICourseService>(()
@@ -34,9 +44,11 @@ namespace Services
             _groupService = new Lazy<IGroupService>(()
                 => new GroupService(repositoryManager, logger));
             _teacherService = new Lazy<ITeacherService>(()
-                => new TeacherService(repositoryManager, logger));
-            _feedbackService = new Lazy<FeedbackService>(()
+                => new TeacherService(repositoryManager, logger, mapper));
+            _feedbackService = new Lazy<IFeedbackService>(()
                 => new FeedbackService(repositoryManager, logger));
+            _authenticationService = new Lazy<IAuthenticationService>(()
+                => new AuthenticationService(logger, mapper, userManager));
         }
 
         public IProgrammingLanguageService ProgrammingLanguageService => _languageService.Value;
@@ -47,5 +59,7 @@ namespace Services
         public ITeacherService TeacherService => _teacherService.Value;
         public ICourseService CourseService => _courseService.Value;
         public IFeedbackService FeedbackService => _feedbackService.Value;
+        public IAuthenticationService AuthenticationService => _authenticationService.Value;
+
     }
 }

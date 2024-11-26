@@ -1,12 +1,9 @@
-﻿using Contracts;
+﻿using AutoMapper;
+using Contracts;
+using Entities.DTO;
 using Entities.Exceptions;
 using Entities.Models;
 using Services.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services
 {
@@ -14,15 +11,27 @@ namespace Services
     {
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
+        private readonly IMapper _mapper;
 
-        public StudentService(IRepositoryManager repository, ILoggerManager logger)
+        public StudentService(
+            IRepositoryManager repository,
+            ILoggerManager logger,
+            IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
+            _mapper = mapper;
         }
 
         public async void CreateStudent(Student student)
         {
+            _repository.Student.CreateStudent(student);
+            await _repository.SaveAsync();
+        }
+
+        public async void CreateStudent(UserForRegistrationDto user)
+        {
+            var student = _mapper.Map<Student>(user);
             _repository.Student.CreateStudent(student);
             await _repository.SaveAsync();
         }
@@ -81,7 +90,7 @@ namespace Services
         {
             var student = await _repository.Student.GetStudentAsync(studentId, trackChanges);
 
-            if(student is null) throw new StudentNotFoundException(studentId);
+            if (student is null) throw new StudentNotFoundException(studentId);
 
             return student;
         }

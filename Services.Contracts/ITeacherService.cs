@@ -1,4 +1,5 @@
-﻿using Entities.Models;
+﻿using Entities.DTO;
+using Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace Services.Contracts
         Task<IEnumerable<Teacher>> GetAllTeachersAsync(bool trackChanges);
         Task<Teacher> GetTeacherAsync(Guid teacherId, bool trackChanges);
         void CreateTeacher(Teacher teacher);
+        void CreateTeacher(UserForRegistrationDto user);
         Task<IEnumerable<Course>> GetCoursesForTeacherAsync(Guid teacherId, bool trackChanges);
         Task<IEnumerable<Project>> GetProjectsForTeacherAsync(Guid teacherId, bool trackChanges);
     }
