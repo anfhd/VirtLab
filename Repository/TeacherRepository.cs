@@ -16,7 +16,7 @@ namespace Repository
         {
         }
 
-        public void CreateTeacher(Teacher teacher) => Create(teacher);
+        public async Task CreateTeacher(Teacher teacher) => Create(teacher);
 
         public async Task<IEnumerable<Project>> GeProjectsForTeacherAsync(Guid teacherId, bool trackChanges) =>
             await FindByCondition(t => t.Id.Equals(teacherId), trackChanges)

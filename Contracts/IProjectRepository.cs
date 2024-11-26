@@ -13,5 +13,6 @@ namespace Contracts
         Task<Project> GetProjectAsync(Guid projectId, bool trackChanges);
         Task<IEnumerable<Technology>> GetProjectTechnologiesAsync(Guid projectId, bool trackChanges);
         Task<IEnumerable<ProgrammingLanguage>> GetProjectLanguagesAsync(Guid projectId, bool trackChanges);
+        Task CreateProject(Project project);
     }
 }

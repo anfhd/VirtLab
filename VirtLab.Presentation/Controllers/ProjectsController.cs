@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Entities.DTO;
+using Microsoft.AspNetCore.Mvc;
 using Services.Contracts;
 
 namespace VirtLab.Presentation.Controllers
@@ -41,6 +42,15 @@ namespace VirtLab.Presentation.Controllers
             var projectProgrammingLanguages = await _service.ProjectService.GetProjectLanguagesAsync(id, trackChanges: false);
 
             return Ok(projectProgrammingLanguages);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateProject([FromBody] ProjectForCreationDto project)
+        {
+            if (project is null) return BadRequest("Project object is null!");
+
+            await _service.ProjectService.CreateProject(project);
+
+            return StatusCode(201);
         }
     }
 }

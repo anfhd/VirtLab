@@ -23,13 +23,13 @@ namespace Services
             _mapper = mapper;
         }
 
-        public async void CreateStudent(Student student)
+        public async Task CreateStudent(Student student)
         {
             _repository.Student.CreateStudent(student);
             await _repository.SaveAsync();
         }
 
-        public async void CreateStudent(UserForRegistrationDto user)
+        public async Task CreateStudent(UserForRegistrationDto user)
         {
             var student = _mapper.Map<Student>(user);
             _repository.Student.CreateStudent(student);

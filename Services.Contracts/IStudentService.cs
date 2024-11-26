@@ -12,8 +12,8 @@ namespace Services.Contracts
     {
         Task<IEnumerable<Student>> GetAllStudentsAsync(bool trackChanges);
         Task<Student> GetStudentAsync(Guid studentId, bool trackChanges);
-        void CreateStudent(Student student);
-        void CreateStudent(UserForRegistrationDto user);
+        Task CreateStudent(Student student);
+        Task CreateStudent(UserForRegistrationDto user);
         Task<IEnumerable<Course>> GetCoursesForStudentAsync(Guid studentId, bool trackChanges);
         Task<IEnumerable<Project>> GetAllStudentProjectsAsync(Guid studentId, bool trackChanges);
         Task<IEnumerable<Project>> GetOwnedStudentProjectsAsync(Guid studentId, bool trackChanges);

@@ -18,6 +18,7 @@ namespace VirtLab
                 src.Courses != null
                 ? src.Courses.Select(course => new Course { Name = course }).ToList()
                 : null));
+            CreateMap<ProjectForCreationDto, Project>();
         }
     }
 }

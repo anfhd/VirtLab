@@ -1,4 +1,6 @@
-﻿using Contracts;
+﻿using AutoMapper;
+using Contracts;
+using Entities.DTO;
 using Entities.Exceptions;
 using Entities.Models;
 using Services.Contracts;
@@ -14,11 +16,20 @@ namespace Services
     {
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
+        private readonly IMapper _mapper;
 
-        public ProjectService(IRepositoryManager repository, ILoggerManager logger)
+        public ProjectService(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
+            _mapper = mapper;
+        }
+
+        public async Task CreateProject(ProjectForCreationDto project)
+        {
+            var projectEntity = _mapper.Map<Project>(project);
+            _repository.Project.CreateProject(projectEntity);
+            await _repository.SaveAsync();
         }
 
         public async Task<IEnumerable<Project>> GetAllProjectsAsync(bool trackChanges)

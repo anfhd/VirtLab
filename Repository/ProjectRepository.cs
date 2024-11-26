@@ -17,6 +17,8 @@ namespace Repository
             
         }
 
+        public async Task CreateProject(Project project) => Create(project);
+
         public async Task<IEnumerable<Project>> GetAllProjectsAsync(bool trackChanges) =>
            await FindAll(trackChanges)
            .OrderBy(p => p.Name)

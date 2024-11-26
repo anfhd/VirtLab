@@ -34,7 +34,7 @@ namespace Services
             _languageService = new Lazy<IProgrammingLanguageService>(() 
                 => new ProgrammingLanguageService(repositoryManager, logger));
             _projectService = new Lazy<IProjectService>(()
-                => new ProjectService(repositoryManager, logger));
+                => new ProjectService(repositoryManager, logger, mapper));
             _studentService = new Lazy<IStudentService>(()
                 => new StudentService(repositoryManager, logger, mapper));
             _technologyService = new Lazy<ITechnologyService>(()
