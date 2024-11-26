@@ -28,17 +28,19 @@ namespace Services
             _mapper = mapper;
         }
 
-        public async void CreateTeacher(Teacher teacher)
+        public async Task CreateTeacherAsync(Teacher teacher)
         {
-            _repository.Teacher.CreateTeacher(teacher);
+            await _repository.Teacher.CreateTeacherAsync(teacher);
             await _repository.SaveAsync();
         }
 
-        public async void CreateTeacher(UserForRegistrationDto user)
+        public async Task CreateTeacherAsync(UserForRegistrationDto user, User baseUser)
         {
             var teacher = _mapper.Map<Teacher>(user);
+            teacher.User = baseUser;
+            teacher.UserId = baseUser.Id;
 
-            _repository.Teacher.CreateTeacher(teacher);
+            await _repository.Teacher.CreateTeacherAsync(teacher);
             await _repository.SaveAsync();
         }
 
