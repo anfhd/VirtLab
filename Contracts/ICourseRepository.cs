@@ -12,7 +12,7 @@ namespace Contracts
         Task<IEnumerable<Course>> GetAllCoursesAsync(bool trackChanges);
         Task<IEnumerable<Assignment>> GetCourseAssignmentsAsync(Guid courseId, bool trackChanges);
         Task<Course> GetCourseAsync(Guid courseId, bool trackChanges);
-        Task<Assignment> GetAssignmentAsync(Guid courseId, Guid assignmentId, bool trackChanges);
+        Task<Assignment> GetAssignmentAsync(Guid assignmentId, bool trackChanges);
 
     }
 }

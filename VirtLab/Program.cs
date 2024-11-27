@@ -4,6 +4,7 @@ using NLog;
 using Microsoft.Extensions.DependencyInjection;
 using Contracts;
 using Microsoft.OpenApi.Models;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,7 +40,12 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-builder.Services.AddControllers()
+builder.Services.AddControllers().AddJsonOptions(opt =>
+    {
+        opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        opt.JsonSerializerOptions.WriteIndented = true;
+
+    })
     .AddApplicationPart(typeof(VirtLab.Presentation.AssemblyReference).Assembly);
 
 var app = builder.Build();

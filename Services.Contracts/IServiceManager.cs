@@ -17,5 +17,6 @@ namespace Services.Contracts
         ICourseService CourseService { get; }
         IFeedbackService FeedbackService { get; }
         IAuthenticationService AuthenticationService { get; }
+        IMarkService MarkService { get; }
     }
 }

@@ -14,8 +14,8 @@ namespace Entities.Models
         public Guid Id { get; set; }
         public float Value { get; set; }
         public Guid ProjectId { get; set; }
-        public Project? Project { get; set; }
+        public virtual Project? Project { get; set; }
         public Guid TeacherId { get; set; }
-        public Teacher? Teacher { get; set; }
+        public virtual Teacher? Teacher { get; set; }
     }
 }

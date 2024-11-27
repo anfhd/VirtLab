@@ -10,5 +10,6 @@ namespace Contracts
     public interface IFeedbackRepository
     {
         Task<IEnumerable<Feedback>> GetFeedbackAsync(Guid projectId, bool trackChanges);
+        Task CreateFeedbackForProjectAsync(Feedback feedback);
     }
 }

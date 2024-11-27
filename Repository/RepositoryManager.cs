@@ -18,6 +18,7 @@ namespace Repository
         private readonly Lazy<IGroupRepository> _groupRepository;
         private readonly Lazy<ITeacherRepository> _teacherRepository;
         private readonly Lazy<IFeedbackRepository> _fedbackRepository;
+        private readonly Lazy<IMarkRepository> _markRepository;
 
         public RepositoryManager(RepositoryContext repositoryContext)
         {
@@ -38,6 +39,8 @@ namespace Repository
                 new TeacherRepository(repositoryContext));
             _fedbackRepository = new Lazy<IFeedbackRepository>(() =>
                 new FeedbackRepository(repositoryContext));
+            _markRepository = new Lazy<IMarkRepository>(() =>
+                new MarkRepository(repositoryContext));
         }
 
         public IProgrammingLanguageRepository ProgrammingLanguage => _programmingLanguageRepository.Value;
@@ -48,6 +51,7 @@ namespace Repository
         public IGroupRepository Group => _groupRepository.Value;
         public ICourseRepository Course => _courseRepository.Value;
         public IFeedbackRepository Feedback => _fedbackRepository.Value;
+        public IMarkRepository Mark => _markRepository.Value;
 
         public async Task SaveAsync() => await _repositoryContext.SaveChangesAsync();
     }

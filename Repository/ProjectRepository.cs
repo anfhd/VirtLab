@@ -17,17 +17,38 @@ namespace Repository
             
         }
 
+        public async Task CreateProject(Project project) => Create(project);
+
         public async Task<IEnumerable<Project>> GetAllProjectsAsync(bool trackChanges) =>
-           await FindAll(trackChanges)
-           .OrderBy(p => p.Name)
+           await FindByCondition((p => !p.IsDeleted), trackChanges)
+           .Include(p => p.ProgrammingLanguages)
+            .Include(p => p.Participants)
+            .Include(p => p.Technologies)
+            .Include(p => p.Feedbacks)
+            .Include(p => p.Owner)
+            .Include(p => p.Assignment)
+            .Include(p => p.Mark)
            .ToListAsync();
 
-        public async Task<Project> GetProjectAsync(Guid projectId, bool trackChanges) =>
-            await FindByCondition(p => p.Id.Equals(projectId), trackChanges)
+        public async Task<Project> GetDeletedProjectAsync(Guid projectId, bool trackChanges) =>
+            await FindByCondition(p => p.Id.Equals(projectId) && p.IsDeleted, trackChanges)
             .Include(p => p.ProgrammingLanguages)
             .Include(p => p.Participants)
             .Include(p => p.Technologies)
             .Include(p => p.Feedbacks)
+            .Include(p => p.Owner)
+            .Include(p => p.Assignment)
+            .Include(p => p.Mark)
+            .SingleOrDefaultAsync();
+
+        public async Task<Project> GetProjectAsync(Guid projectId, bool trackChanges) =>
+            await FindByCondition(p => p.Id.Equals(projectId) && !p.IsDeleted, trackChanges)
+            .Include(p => p.ProgrammingLanguages)
+            .Include(p => p.Participants)
+            .Include(p => p.Technologies)
+            .Include(p => p.Feedbacks)
+            .Include(p => p.Owner)
+            .Include(p => p.Assignment)
             .SingleOrDefaultAsync();
 
         public async Task<IEnumerable<ProgrammingLanguage>> GetProjectLanguagesAsync(Guid projectId, bool trackChanges) =>
