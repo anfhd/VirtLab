@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Services.Contracts
 {
-    public interface IFeedbackService
+    public interface IMarkService
     {
-        Task<IEnumerable<Feedback>> GetFeedbackAsync(Guid projectId, bool trackChanges);
-        Task CreateFeedbackForProjectAsync(FeedbackForCreationDto feedback);
+        Task CreateMarkForProjectAsync(MarkForCreationDTO mark);
+        Task<Mark> GetMarkForProjectAsync(Guid projectId, bool trackChanges);
     }
 }

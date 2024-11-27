@@ -48,9 +48,41 @@ namespace VirtLab.Presentation.Controllers
         {
             if (project is null) return BadRequest("Project object is null!");
 
-            await _service.ProjectService.CreateProject(project);
+            await _service.ProjectService.CreateProjectAsync(project);
 
             return StatusCode(201);
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> DeleteProject(Guid id)
+        {
+            await _service.ProjectService.DeleteProjectAsync(id, trackChanges: true);
+
+            return NoContent();
+        }
+
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> UpdateProject(Guid id, [FromBody] ProjectForUpdateDto project)
+        {
+            await _service.ProjectService.UpdateProjectAsync(id, project, trackChanges: true);
+
+            return NoContent();
+        }
+
+        [HttpPost("{id:guid}/mark")]
+        public async Task<IActionResult> CreateMarkForProject(Guid id, [FromBody] MarkForCreationDTO mark)
+        {
+            await _service.MarkService.CreateMarkForProjectAsync(mark);
+
+            return StatusCode(201);
+        }
+
+        [HttpPut("{id:guid}/restore")]
+        public async Task<IActionResult> RestoreProject(Guid id)
+        {
+            await _service.ProjectService.RestoreProjectAsync(id, trackChanges: true);
+
+            return NoContent();
         }
     }
 }

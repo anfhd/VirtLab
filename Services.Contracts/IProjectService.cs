@@ -14,6 +14,9 @@ namespace Services.Contracts
         Task<Project> GetProjectAsync(Guid projectId, bool trackChanges);
         Task<IEnumerable<Technology>> GetProjectTechnologiesAsync(Guid projectId, bool trackChanges);
         Task<IEnumerable<ProgrammingLanguage>> GetProjectLanguagesAsync(Guid projectId, bool trackChanges);
-        Task CreateProject(ProjectForCreationDto project);
+        Task CreateProjectAsync(ProjectForCreationDto project);
+        Task UpdateProjectAsync(Guid projectId, ProjectForUpdateDto project, bool trackChanges);
+        Task DeleteProjectAsync(Guid projectId, bool trackChanges);
+        Task RestoreProjectAsync(Guid projectId, bool trackChanges);
     }
 }

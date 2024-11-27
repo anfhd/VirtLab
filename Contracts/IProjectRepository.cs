@@ -10,6 +10,7 @@ namespace Contracts
     public interface IProjectRepository
     {
         Task<IEnumerable<Project>> GetAllProjectsAsync(bool trackChanges);
+        Task<Project> GetDeletedProjectAsync(Guid projectId, bool trackChanges);
         Task<Project> GetProjectAsync(Guid projectId, bool trackChanges);
         Task<IEnumerable<Technology>> GetProjectTechnologiesAsync(Guid projectId, bool trackChanges);
         Task<IEnumerable<ProgrammingLanguage>> GetProjectLanguagesAsync(Guid projectId, bool trackChanges);
