@@ -1,4 +1,5 @@
 ﻿using Entities.DTO;
+using Entities.Exceptions;
 using Entities.Models;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace Services.Contracts
         Task CreateTeacherAsync(Teacher teacher);
         Task CreateTeacherAsync(UserForRegistrationDto user, User baseUser);
         Task<IEnumerable<Course>> GetCoursesForTeacherAsync(Guid teacherId, bool trackChanges);
+        Task<Teacher> GetTeacherByBaseUserIdAsync(string userId, bool trackChanges);
         Task<IEnumerable<Project>> GetProjectsForTeacherAsync(Guid teacherId, bool trackChanges);
     }
 }

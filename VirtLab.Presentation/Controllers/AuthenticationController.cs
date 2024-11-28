@@ -26,7 +26,7 @@ public class AuthenticationController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var baseUser = await _service.AuthenticationService.GetUser(userForRegistration.Email);
+        var baseUser = await _service.AuthenticationService.GetUserByEmail(userForRegistration.Email);
 
         if (userForRegistration.Roles.Contains("Student"))
         {
@@ -39,4 +39,36 @@ public class AuthenticationController : ControllerBase
 
         return StatusCode(201);
     }
+
+    [HttpPost("login")]
+    public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDto user)
+    {
+        if (!await _service.AuthenticationService.ValidateUser(user))
+            return Unauthorized();
+
+        var foundedUser = await _service.AuthenticationService.GetUserByUsername(user.UserName);
+        var role = await _service.AuthenticationService.GetUserRole(foundedUser);
+
+        Guid foundedUserId = Guid.Empty;
+
+        switch (role.ToLower())
+        {
+            case "student":
+                var student = await _service.StudentService.GetStudentByBaseUserIdAsync(foundedUser.Id, trackChanges: false);
+                foundedUserId = student.Id;
+                break;
+            case "teacher":
+                var teacher = await _service.TeacherService.GetTeacherByBaseUserIdAsync(foundedUser.Id, trackChanges: false);
+                foundedUserId = teacher.Id;
+                break;
+        }
+
+        return Ok(new
+        {
+            Token = await _service.AuthenticationService.CreateToken(),
+            UserId = foundedUserId,
+            Role = role
+        });
+    }
+
 }

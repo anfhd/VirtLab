@@ -28,7 +28,8 @@ namespace Services
             IRepositoryManager repositoryManager,
             ILoggerManager logger,
             IMapper mapper,
-            UserManager<User> userManager
+            UserManager<User> userManager,
+            IConfiguration configuration
             )
         {
             _languageService = new Lazy<IProgrammingLanguageService>(() 
@@ -48,7 +49,7 @@ namespace Services
             _feedbackService = new Lazy<IFeedbackService>(()
                 => new FeedbackService(repositoryManager, logger));
             _authenticationService = new Lazy<IAuthenticationService>(()
-                => new AuthenticationService(logger, mapper, userManager));
+                => new AuthenticationService(logger, mapper, userManager, configuration));
         }
 
         public IProgrammingLanguageService ProgrammingLanguageService => _languageService.Value;
