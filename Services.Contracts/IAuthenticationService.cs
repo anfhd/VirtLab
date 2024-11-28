@@ -13,6 +13,7 @@ namespace Services.Contracts
     {
         Task<IdentityResult> RegisterUser(UserForRegistrationDto userForRegistration);
         Task<User> GetUserByEmail(string email);
+        Task<User> GetUserById(string id);
         Task<User> GetUserByUsername(string username);
         Task<string> GetUserRole(User user);
         Task<bool> ValidateUser(UserForAuthenticationDto userForAuth);

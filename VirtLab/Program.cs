@@ -3,7 +3,6 @@ using VirtLab.Extensions;
 using NLog;
 using Microsoft.Extensions.DependencyInjection;
 using Contracts;
-using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
