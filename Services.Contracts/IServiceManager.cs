@@ -13,6 +13,7 @@ namespace Services.Contracts
         IStudentService StudentService { get; }
         ITechnologyService TechnologyService { get; }
         IGroupService GroupService { get; }
+        IInvitationService InvitationService { get; }
         ITeacherService TeacherService { get; }
         ICourseService CourseService { get; }
         IFeedbackService FeedbackService { get; }
