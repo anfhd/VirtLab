@@ -12,8 +12,8 @@ using Repository;
 namespace VirtLab.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20241127005636_PrayingThatThisShitWillHelp")]
-    partial class PrayingThatThisShitWillHelp
+    [Migration("20241128020315_front-test")]
+    partial class fronttest
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -204,9 +204,6 @@ namespace VirtLab.Migrations
 
                     b.Property<bool>("IsSentForReview")
                         .HasColumnType("bit");
-
-                    b.Property<Guid>("MarkId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()

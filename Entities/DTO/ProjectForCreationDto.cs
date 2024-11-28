@@ -13,8 +13,8 @@ namespace Entities.DTO
         public Guid OwnerId { get; set; }
        // public Student? Owner { get; set; }
 
-        public Guid MarkId { get; set; }
-        public Mark? Mark { get; set; }
+        //public Guid MarkId { get; set; }
+        //public Mark? Mark { get; set; }
 
         public Guid AssignmentId { get; set; }
         // public virtual Assignment? Assignment { get; set; }

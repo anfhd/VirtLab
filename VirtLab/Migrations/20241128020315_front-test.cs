@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VirtLab.Migrations
 {
     /// <inheritdoc />
-    public partial class Fixing : Migration
+    public partial class fronttest : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -330,7 +330,6 @@ namespace VirtLab.Migrations
                     IsAccepted = table.Column<bool>(type: "bit", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MarkId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AssignmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
@@ -404,30 +403,6 @@ namespace VirtLab.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProgrammingLanguageProject",
-                columns: table => new
-                {
-                    ProgrammingLanguagesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProjectsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProgrammingLanguageProject", x => new { x.ProgrammingLanguagesId, x.ProjectsId });
-                    table.ForeignKey(
-                        name: "FK_ProgrammingLanguageProject_ProgrammingLanguages_ProgrammingLanguagesId",
-                        column: x => x.ProgrammingLanguagesId,
-                        principalTable: "ProgrammingLanguages",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProgrammingLanguageProject_Projects_ProjectsId",
-                        column: x => x.ProjectsId,
-                        principalTable: "Projects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ProjectParticipants",
                 columns: table => new
                 {
@@ -452,7 +427,31 @@ namespace VirtLab.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProjectTechnology",
+                name: "ProjectProgrammingLanguages",
+                columns: table => new
+                {
+                    ProgrammingLanguagesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProjectsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProjectProgrammingLanguages", x => new { x.ProgrammingLanguagesId, x.ProjectsId });
+                    table.ForeignKey(
+                        name: "FK_ProjectProgrammingLanguages_ProgrammingLanguages_ProgrammingLanguagesId",
+                        column: x => x.ProgrammingLanguagesId,
+                        principalTable: "ProgrammingLanguages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProjectProgrammingLanguages_Projects_ProjectsId",
+                        column: x => x.ProjectsId,
+                        principalTable: "Projects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProjectTechnologies",
                 columns: table => new
                 {
                     ProjectsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -460,15 +459,15 @@ namespace VirtLab.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProjectTechnology", x => new { x.ProjectsId, x.TechnologiesId });
+                    table.PrimaryKey("PK_ProjectTechnologies", x => new { x.ProjectsId, x.TechnologiesId });
                     table.ForeignKey(
-                        name: "FK_ProjectTechnology_Projects_ProjectsId",
+                        name: "FK_ProjectTechnologies_Projects_ProjectsId",
                         column: x => x.ProjectsId,
                         principalTable: "Projects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProjectTechnology_Technologies_TechnologiesId",
+                        name: "FK_ProjectTechnologies_Technologies_TechnologiesId",
                         column: x => x.TechnologiesId,
                         principalTable: "Technologies",
                         principalColumn: "Id",
@@ -556,14 +555,14 @@ namespace VirtLab.Migrations
                 column: "TeacherId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProgrammingLanguageProject_ProjectsId",
-                table: "ProgrammingLanguageProject",
-                column: "ProjectsId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ProjectParticipants_ParticipatedProjectsId",
                 table: "ProjectParticipants",
                 column: "ParticipatedProjectsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProjectProgrammingLanguages_ProjectsId",
+                table: "ProjectProgrammingLanguages",
+                column: "ProjectsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Projects_AssignmentId",
@@ -576,8 +575,8 @@ namespace VirtLab.Migrations
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProjectTechnology_TechnologiesId",
-                table: "ProjectTechnology",
+                name: "IX_ProjectTechnologies_TechnologiesId",
+                table: "ProjectTechnologies",
                 column: "TechnologiesId");
 
             migrationBuilder.CreateIndex(
@@ -626,13 +625,13 @@ namespace VirtLab.Migrations
                 name: "Marks");
 
             migrationBuilder.DropTable(
-                name: "ProgrammingLanguageProject");
-
-            migrationBuilder.DropTable(
                 name: "ProjectParticipants");
 
             migrationBuilder.DropTable(
-                name: "ProjectTechnology");
+                name: "ProjectProgrammingLanguages");
+
+            migrationBuilder.DropTable(
+                name: "ProjectTechnologies");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
