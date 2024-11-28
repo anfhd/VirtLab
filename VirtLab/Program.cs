@@ -17,6 +17,8 @@ builder.Services.ConfigureLoggerService();
 
 builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();
+builder.Services.ConfigureJWT(builder.Configuration);
+
 builder.Services.AddAutoMapper(typeof(Program));
 
 // Add services to the container.
@@ -24,23 +26,8 @@ builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureSqlContext(builder.Configuration);
 
-builder.Services.AddSwaggerGen(options =>
-{
-    options.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Title = "VirtLab API",
-        Version = "v1",
-        Description = "API documentation for the VirtLab project",
-        Contact = new OpenApiContact
-        {
-            Name = "Your Name",
-            Email = "your.email@example.com",
-            Url = new Uri("https://yourwebsite.com")
-        }
-    });
-});
-
-builder.Services.AddControllers().AddJsonOptions(opt =>
+builder.Services.AddControllers()
+    .AddJsonOptions(opt =>
     {
         opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
         opt.JsonSerializerOptions.WriteIndented = true;
@@ -49,15 +36,6 @@ builder.Services.AddControllers().AddJsonOptions(opt =>
     .AddApplicationPart(typeof(VirtLab.Presentation.AssemblyReference).Assembly);
 
 var app = builder.Build();
-
-
-app.UseSwagger();
-app.UseSwaggerUI(options =>
-{
-    options.SwaggerEndpoint("/swagger/v1/swagger.json", "VirtLab API v1");
-    options.RoutePrefix = string.Empty; // Swagger буде доступний за кореневим URL
-});
-
 
 var logger = app.Services.GetRequiredService<ILoggerManager>();
 app.ConfigureExceptionHandler(logger);

@@ -47,6 +47,10 @@ namespace Repository
             await FindByCondition(s => s.Id.Equals(studentId), trackChanges)
             .SingleOrDefaultAsync();
 
+        public async Task<Student> GetStudentByBaseUserIdAsync(string userId, bool trackChanges) =>
+            await FindByCondition(s => s.UserId.Equals(userId), trackChanges)
+            .SingleOrDefaultAsync();
+
         public async Task<IEnumerable<Project>> GetStudentOwnedProjectsAsync(Guid studentId, bool trackChanges) =>
             await FindByCondition(s => s.Id.Equals(studentId), trackChanges)
             .Include(s => s.OwnedProjects)
