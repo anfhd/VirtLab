@@ -1,4 +1,5 @@
-﻿using Entities.Models;
+﻿using Entities.DTO;
+using Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,9 @@ namespace Services.Contracts
         Task<Project> GetProjectAsync(Guid projectId, bool trackChanges);
         Task<IEnumerable<Technology>> GetProjectTechnologiesAsync(Guid projectId, bool trackChanges);
         Task<IEnumerable<ProgrammingLanguage>> GetProjectLanguagesAsync(Guid projectId, bool trackChanges);
+        Task CreateProjectAsync(ProjectForCreationDto project);
+        Task UpdateProjectAsync(Guid projectId, ProjectForUpdateDto project, bool trackChanges);
+        Task DeleteProjectAsync(Guid projectId, bool trackChanges);
+        Task RestoreProjectAsync(Guid projectId, bool trackChanges);
     }
 }

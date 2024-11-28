@@ -48,13 +48,10 @@ namespace Services
             return courseAssignments;
         }
 
-        public async Task<Assignment> GetAssignmentAsync(Guid courseId, Guid assignmentId, bool trackChanges)
+        public async Task<Assignment> GetAssignmentAsync(Guid assignmentId, bool trackChanges)
         {
-            var course = await _repository.Course.GetCourseAsync(courseId, trackChanges);
 
-            if (course is null) throw new CourseNotFoundException(courseId);
-
-            var assignment = await _repository.Course.GetAssignmentAsync(courseId, assignmentId, trackChanges);
+            var assignment = await _repository.Course.GetAssignmentAsync(assignmentId, trackChanges);
 
             return assignment;
         }

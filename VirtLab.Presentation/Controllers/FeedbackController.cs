@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Entities.DTO;
+using Microsoft.AspNetCore.Mvc;
 using Services.Contracts;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,13 @@ namespace VirtLab.Presentation.Controllers
             var feedback = await _service.FeedbackService.GetFeedbackAsync(id, trackChanges: false);
 
             return Ok(feedback);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateFeedbackForProject([FromBody] FeedbackForCreationDto feedback)
+        {
+            await _service.FeedbackService.CreateFeedbackForProjectAsync(feedback);
+
+            return StatusCode(201);
         }
     }
 }

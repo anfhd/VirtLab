@@ -21,28 +21,27 @@ namespace Repository
             {
                 entity.HasKey(p => p.Id);
 
+                // Власник проєкту
                 entity.HasOne(p => p.Owner)
-                      .WithMany()
+                      .WithMany(s => s.OwnedProjects)
                       .HasForeignKey(p => p.OwnerId)
                       .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(p => p.Mark)
-                      .WithOne(m => m.Project) // У Mark є відповідна навігаційна властивість
-                      .HasForeignKey<Project>(p => p.MarkId) // Foreign Key знаходиться в Project
-                      .OnDelete(DeleteBehavior.Restrict);
+                // Учасники проєкту
+                entity.HasMany(p => p.Participants)
+                      .WithMany(s => s.ParticipatedProjects)
+                      .UsingEntity(j => j.ToTable("ProjectParticipants"));
+
+                // Технології
+                entity.HasMany(p => p.Technologies)
+                      .WithMany(t => t.Projects)
+                      .UsingEntity(j => j.ToTable("ProjectTechnologies"));
+
+                // Мови програмування
+                entity.HasMany(p => p.ProgrammingLanguages)
+                      .WithMany(pl => pl.Projects)
+                      .UsingEntity(j => j.ToTable("ProjectProgrammingLanguages"));
             });
-
-            modelBuilder.Entity<Mark>(entity =>
-            {
-                // Встановлюємо первинний ключ
-                entity.HasKey(m => m.Id);
-
-                entity.HasOne(m => m.Project)
-                      .WithOne(p => p.Mark) // Assuming Project has a single Mark
-                      .HasForeignKey<Mark>(m => m.ProjectId) // Foreign Key знаходиться у Mark
-                      .OnDelete(DeleteBehavior.Restrict);
-            });
-
 
             modelBuilder.Entity<Student>(entity =>
             {
@@ -78,20 +77,20 @@ namespace Repository
                       .HasForeignKey(c => c.TeacherId)
                       .OnDelete(DeleteBehavior.Restrict);
             });
-            
-             // Власник проєкту
-            modelBuilder.Entity<Project>()
-                .HasOne(p => p.Owner) // Один студент
-                .WithMany(s => s.OwnedProjects) // Багато проєктів
-                .HasForeignKey(p => p.OwnerId) // Зовнішній ключ у Project
-                .OnDelete(DeleteBehavior.Restrict); // Уникаємо каскадного видалення
 
-            // Учасники проєкту (багато-до-багатьох)
-            modelBuilder.Entity<Project>()
-                .HasMany(p => p.Participants) // Учасники
-                .WithMany(s => s.ParticipatedProjects) // Проєкти, у яких студент бере участь
-                .UsingEntity(j => j.ToTable("ProjectParticipants")); // Проміжна таблиця
+            modelBuilder.Entity<Mark>(entity =>
+            {
+                entity.HasKey(m => m.Id);
+
+                // Зв'язок Mark <-> Project
+                entity.HasOne(m => m.Project)
+                      .WithOne(p => p.Mark)
+                      .HasForeignKey<Mark>(m => m.ProjectId)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
         }
+       
+
         public DbSet<Project>? Projects { get; set; }
         public DbSet<Student>? Students { get; set; }
         public DbSet<ProgrammingLanguage>? ProgrammingLanguages { get; set; }

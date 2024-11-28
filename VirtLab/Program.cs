@@ -3,6 +3,8 @@ using VirtLab.Extensions;
 using NLog;
 using Microsoft.Extensions.DependencyInjection;
 using Contracts;
+using Microsoft.OpenApi.Models;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,12 @@ builder.Services.ConfigureServiceManager();
 builder.Services.ConfigureSqlContext(builder.Configuration);
 
 builder.Services.AddControllers()
+    .AddJsonOptions(opt =>
+    {
+        opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        opt.JsonSerializerOptions.WriteIndented = true;
+
+    })
     .AddApplicationPart(typeof(VirtLab.Presentation.AssemblyReference).Assembly);
 
 var app = builder.Build();

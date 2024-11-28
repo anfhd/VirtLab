@@ -32,8 +32,8 @@ namespace Repository
             .SelectMany(c => c.Assignments)
             .ToListAsync();
 
-        public async Task<Assignment> GetAssignmentAsync(Guid courseId, Guid assignmentId, bool trackChanges) =>
-             await FindByCondition(c => c.Id.Equals(courseId), trackChanges)
+        public async Task<Assignment> GetAssignmentAsync(Guid assignmentId, bool trackChanges) =>
+             await FindAll(trackChanges)
             .Include(c => c.Assignments)
             .SelectMany(c => c.Assignments)
             .SingleOrDefaultAsync(a => a.Id == assignmentId);

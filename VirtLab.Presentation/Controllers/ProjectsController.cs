@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Entities.DTO;
+using Microsoft.AspNetCore.Mvc;
 using Services.Contracts;
 
 namespace VirtLab.Presentation.Controllers
@@ -41,6 +42,47 @@ namespace VirtLab.Presentation.Controllers
             var projectProgrammingLanguages = await _service.ProjectService.GetProjectLanguagesAsync(id, trackChanges: false);
 
             return Ok(projectProgrammingLanguages);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateProject([FromBody] ProjectForCreationDto project)
+        {
+            if (project is null) return BadRequest("Project object is null!");
+
+            await _service.ProjectService.CreateProjectAsync(project);
+
+            return StatusCode(201);
+        }
+
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> DeleteProject(Guid id)
+        {
+            await _service.ProjectService.DeleteProjectAsync(id, trackChanges: true);
+
+            return NoContent();
+        }
+
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> UpdateProject(Guid id, [FromBody] ProjectForUpdateDto project)
+        {
+            await _service.ProjectService.UpdateProjectAsync(id, project, trackChanges: true);
+
+            return NoContent();
+        }
+
+        [HttpPost("{id:guid}/mark")]
+        public async Task<IActionResult> CreateMarkForProject(Guid id, [FromBody] MarkForCreationDTO mark)
+        {
+            await _service.MarkService.CreateMarkForProjectAsync(mark);
+
+            return StatusCode(201);
+        }
+
+        [HttpPut("{id:guid}/restore")]
+        public async Task<IActionResult> RestoreProject(Guid id)
+        {
+            await _service.ProjectService.RestoreProjectAsync(id, trackChanges: true);
+
+            return NoContent();
         }
     }
 }

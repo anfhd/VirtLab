@@ -16,6 +16,7 @@ namespace Contracts
         IGroupRepository Group { get; }
         ICourseRepository Course { get; }
         IFeedbackRepository Feedback { get; }
+        IMarkRepository Mark { get; }
 
         Task SaveAsync();
     }

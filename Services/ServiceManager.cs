@@ -23,6 +23,7 @@ namespace Services
         private readonly Lazy<ITeacherService> _teacherService;
         private readonly Lazy<IFeedbackService> _feedbackService;
         private readonly Lazy<IAuthenticationService> _authenticationService;
+        private readonly Lazy<IMarkService> _markService;
 
         public ServiceManager(
             IRepositoryManager repositoryManager,
@@ -35,7 +36,7 @@ namespace Services
             _languageService = new Lazy<IProgrammingLanguageService>(() 
                 => new ProgrammingLanguageService(repositoryManager, logger));
             _projectService = new Lazy<IProjectService>(()
-                => new ProjectService(repositoryManager, logger));
+                => new ProjectService(repositoryManager, logger, mapper));
             _studentService = new Lazy<IStudentService>(()
                 => new StudentService(repositoryManager, logger, mapper));
             _technologyService = new Lazy<ITechnologyService>(()
@@ -47,9 +48,11 @@ namespace Services
             _teacherService = new Lazy<ITeacherService>(()
                 => new TeacherService(repositoryManager, logger, mapper));
             _feedbackService = new Lazy<IFeedbackService>(()
-                => new FeedbackService(repositoryManager, logger));
+                => new FeedbackService(repositoryManager, logger, mapper));
             _authenticationService = new Lazy<IAuthenticationService>(()
                 => new AuthenticationService(logger, mapper, userManager, configuration));
+            _markService = new Lazy<IMarkService>(()
+                => new MarkService(repositoryManager, logger, mapper));
         }
 
         public IProgrammingLanguageService ProgrammingLanguageService => _languageService.Value;
@@ -61,6 +64,6 @@ namespace Services
         public ICourseService CourseService => _courseService.Value;
         public IFeedbackService FeedbackService => _feedbackService.Value;
         public IAuthenticationService AuthenticationService => _authenticationService.Value;
-
+        public IMarkService MarkService => _markService.Value;
     }
 }

@@ -17,6 +17,8 @@ namespace Repository
             
         }
 
+        public async Task CreateFeedbackForProjectAsync(Feedback feedback) => Create(feedback);
+
         public async Task<IEnumerable<Feedback>> GetFeedbackAsync(Guid projectId, bool trackChanges) =>
             await FindByCondition(f => f.ProjectId.Equals(projectId), trackChanges)
             .ToListAsync();
