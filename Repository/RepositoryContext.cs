@@ -122,6 +122,7 @@ namespace Repository
         public DbSet<Feedback>? Feedbacks { get; set; }
         public DbSet<Group>? Groups { get; set; }
         public DbSet<Mark>? Marks { get; set; }
+        public DbSet<Invitation>? Invitations { get; set; }
         public DbSet<Teacher>? Teachers { get; set; }
         public DbSet<UserPermission> Permissions { get; set; }
         public DbSet<File> Files { get; set; }

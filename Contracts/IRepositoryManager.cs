@@ -21,6 +21,7 @@ namespace Contracts
         IPermissionRepository Permission { get; }
         IFileVersionRepository FileVersion { get; }
         ICommentRepository Comment { get; }
+        IInvitationRepository Invitation { get; }
 
         Task SaveAsync();
     }

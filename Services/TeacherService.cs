@@ -91,5 +91,14 @@ namespace Services
         {
             throw new NotImplementedException();
         }
+
+        public async Task<Teacher> GetTeacherByBaseUserIdAsync(string userId, bool trackChanges)
+        {
+            var teacher = await _repository.Teacher.GetTeacherByBaseUserIdAsync(userId, trackChanges);
+
+            if (teacher is null) throw new StudentNotFoundException(new Guid(userId));
+
+            return teacher;
+        }
     }
 }

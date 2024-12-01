@@ -20,6 +20,7 @@ namespace Services
         private readonly Lazy<ITechnologyService> _technologyService;
         private readonly Lazy<ICourseService> _courseService;
         private readonly Lazy<IGroupService> _groupService;
+        private readonly Lazy<IInvitationService> _invitationService;
         private readonly Lazy<ITeacherService> _teacherService;
         private readonly Lazy<IFeedbackService> _feedbackService;
         private readonly Lazy<IAuthenticationService> _authenticationService;
@@ -31,7 +32,8 @@ namespace Services
             IRepositoryManager repositoryManager,
             ILoggerManager logger,
             IMapper mapper,
-            UserManager<User> userManager
+            UserManager<User> userManager,
+            IConfiguration configuration
             )
         {
             _languageService = new Lazy<IProgrammingLanguageService>(() 
@@ -46,12 +48,14 @@ namespace Services
                 => new CourseService(repositoryManager, logger));
             _groupService = new Lazy<IGroupService>(()
                 => new GroupService(repositoryManager, logger));
+            _invitationService = new Lazy<IInvitationService>(()
+                => new InvitationService(repositoryManager, logger));
             _teacherService = new Lazy<ITeacherService>(()
                 => new TeacherService(repositoryManager, logger, mapper));
             _feedbackService = new Lazy<IFeedbackService>(()
                 => new FeedbackService(repositoryManager, logger, mapper));
             _authenticationService = new Lazy<IAuthenticationService>(()
-                => new AuthenticationService(logger, mapper, userManager));
+                => new AuthenticationService(logger, mapper, userManager, configuration));
             _markService = new Lazy<IMarkService>(()
                 => new MarkService(repositoryManager, logger, mapper));
             _fileService = new Lazy<IFileService>(()
@@ -65,6 +69,7 @@ namespace Services
         public IStudentService StudentService => _studentService.Value;
         public ITechnologyService TechnologyService => _technologyService.Value;
         public IGroupService GroupService => _groupService.Value;
+        public IInvitationService InvitationService => _invitationService.Value;
         public ITeacherService TeacherService => _teacherService.Value;
         public ICourseService CourseService => _courseService.Value;
         public IFeedbackService FeedbackService => _feedbackService.Value;

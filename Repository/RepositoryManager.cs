@@ -23,6 +23,7 @@ namespace Repository
         private readonly Lazy<IPermissionRepository> _permissionRepository;
         private readonly Lazy<IFileVersionRepository> _versionRepository;
         private readonly Lazy<ICommentRepository> _commentRepository;
+        private readonly Lazy<IInvitationRepository> _invitationRepository;
 
         public RepositoryManager(RepositoryContext repositoryContext)
         {
@@ -53,6 +54,8 @@ namespace Repository
                 new FileVersionRepository(repositoryContext));
             _commentRepository = new Lazy<ICommentRepository>(() =>
                 new CommentRepository(repositoryContext));
+            _invitationRepository = new Lazy<IInvitationRepository>(() =>
+                new InvitationRepository(repositoryContext));
         }
 
         public IProgrammingLanguageRepository ProgrammingLanguage => _programmingLanguageRepository.Value;
@@ -68,6 +71,7 @@ namespace Repository
         public IPermissionRepository Permission => _permissionRepository.Value;
         public IFileVersionRepository FileVersion => _versionRepository.Value;
         public ICommentRepository Comment => _commentRepository.Value;
+        public IInvitationRepository Invitation => _invitationRepository.Value;
 
         public async Task SaveAsync() => await _repositoryContext.SaveChangesAsync();
     }

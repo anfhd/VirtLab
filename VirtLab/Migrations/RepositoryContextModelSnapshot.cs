@@ -218,6 +218,36 @@ namespace VirtLab.Migrations
                     b.ToTable("Groups");
                 });
 
+            modelBuilder.Entity("Entities.Models.Invitation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsAccepted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Invitations");
+                });
+
             modelBuilder.Entity("Entities.Models.Mark", b =>
                 {
                     b.Property<Guid>("Id")
@@ -713,6 +743,10 @@ namespace VirtLab.Migrations
                 {
                     b.HasOne("Entities.Models.Project", "Project")
                         .WithMany("Files")
+            modelBuilder.Entity("Entities.Models.Invitation", b =>
+                {
+                    b.HasOne("Entities.Models.Project", "Project")
+                        .WithMany()
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -729,6 +763,15 @@ namespace VirtLab.Migrations
                         .IsRequired();
 
                     b.Navigation("File");
+                    b.HasOne("Entities.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("Entities.Models.Mark", b =>

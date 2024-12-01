@@ -52,5 +52,9 @@ namespace Repository
             .ThenInclude(c => c.Assignments)
             .Include(s => s.User)
             .SingleOrDefaultAsync();
+
+        public async Task<Teacher> GetTeacherByBaseUserIdAsync(string userId, bool trackChanges) =>
+            await FindByCondition(s => s.UserId.Equals(userId), trackChanges)
+            .SingleOrDefaultAsync();
     }
 }

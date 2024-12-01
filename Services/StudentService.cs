@@ -98,6 +98,15 @@ namespace Services
             return student;
         }
 
+        public async Task<Student> GetStudentByBaseUserIdAsync(string userId, bool trackChanges)
+        {
+            var student = await _repository.Student.GetStudentByBaseUserIdAsync(userId, trackChanges);
+
+            if (student is null) throw new StudentNotFoundException(new Guid(userId));
+
+            return student;
+        }
+
         public async Task<IEnumerable<Assignment>> GetStudentAssignmentsAsync(Guid studentId, bool trackChanges)
         {
             var student = await _repository.Student.GetStudentAsync(studentId, trackChanges);

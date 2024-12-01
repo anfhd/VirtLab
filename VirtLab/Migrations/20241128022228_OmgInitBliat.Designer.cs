@@ -12,8 +12,8 @@ using Repository;
 namespace VirtLab.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20241127005636_PrayingThatThisShitWillHelp")]
-    partial class PrayingThatThisShitWillHelp
+    [Migration("20241128022228_OmgInitBliat")]
+    partial class OmgInitBliat
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -147,6 +147,36 @@ namespace VirtLab.Migrations
                     b.ToTable("Groups");
                 });
 
+            modelBuilder.Entity("Entities.Models.Invitation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsAccepted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("ProjectId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Invitations");
+                });
+
             modelBuilder.Entity("Entities.Models.Mark", b =>
                 {
                     b.Property<Guid>("Id")
@@ -204,9 +234,6 @@ namespace VirtLab.Migrations
 
                     b.Property<bool>("IsSentForReview")
                         .HasColumnType("bit");
-
-                    b.Property<Guid>("MarkId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -593,6 +620,25 @@ namespace VirtLab.Migrations
                     b.Navigation("Project");
 
                     b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("Entities.Models.Invitation", b =>
+                {
+                    b.HasOne("Entities.Models.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Entities.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("Entities.Models.Mark", b =>
