@@ -19,6 +19,10 @@ namespace Repository
         private readonly Lazy<ITeacherRepository> _teacherRepository;
         private readonly Lazy<IFeedbackRepository> _fedbackRepository;
         private readonly Lazy<IMarkRepository> _markRepository;
+        private readonly Lazy<IFileRepository> _fileRepository;
+        private readonly Lazy<IPermissionRepository> _permissionRepository;
+        private readonly Lazy<IFileVersionRepository> _versionRepository;
+        private readonly Lazy<ICommentRepository> _commentRepository;
         private readonly Lazy<IInvitationRepository> _invitationRepository;
 
         public RepositoryManager(RepositoryContext repositoryContext)
@@ -42,6 +46,14 @@ namespace Repository
                 new FeedbackRepository(repositoryContext));
             _markRepository = new Lazy<IMarkRepository>(() =>
                 new MarkRepository(repositoryContext));
+            _fileRepository = new Lazy<IFileRepository>(() =>
+                new FileRepository(repositoryContext));
+            _permissionRepository = new Lazy<IPermissionRepository>(() =>
+                new PermissionRepository(repositoryContext));
+            _versionRepository = new Lazy<IFileVersionRepository>(() =>
+                new FileVersionRepository(repositoryContext));
+            _commentRepository = new Lazy<ICommentRepository>(() =>
+                new CommentRepository(repositoryContext));
             _invitationRepository = new Lazy<IInvitationRepository>(() =>
                 new InvitationRepository(repositoryContext));
         }
@@ -55,6 +67,10 @@ namespace Repository
         public ICourseRepository Course => _courseRepository.Value;
         public IFeedbackRepository Feedback => _fedbackRepository.Value;
         public IMarkRepository Mark => _markRepository.Value;
+        public IFileRepository File => _fileRepository.Value;
+        public IPermissionRepository Permission => _permissionRepository.Value;
+        public IFileVersionRepository FileVersion => _versionRepository.Value;
+        public ICommentRepository Comment => _commentRepository.Value;
         public IInvitationRepository Invitation => _invitationRepository.Value;
 
         public async Task SaveAsync() => await _repositoryContext.SaveChangesAsync();

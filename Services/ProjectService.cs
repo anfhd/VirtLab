@@ -108,7 +108,6 @@ namespace Services
 
             if (projectEntity is null) throw new ProjectNotFoundException(projectId);
 
-
             projectEntity.Name = project.Name;
             projectEntity.IsAccepted = project.IsAccepted;
             projectEntity.IsSentForReview = project.IsSentForReview;    

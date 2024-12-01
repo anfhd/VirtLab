@@ -2,6 +2,7 @@
 using Entities.DTO;
 using Entities.Models;
 
+
 namespace VirtLab
 {
     public class MappingProfile : Profile
@@ -24,10 +25,17 @@ namespace VirtLab
                 src.Courses != null
                 ? src.Courses.Select(course => new Course { Name = course }).ToList()
                 : null));
+
             CreateMap<ProjectForCreationDto, Project>();
             CreateMap<ProjectForUpdateDto, Project>();
             CreateMap<MarkForCreationDTO, Mark>();
             CreateMap<FeedbackForCreationDto, Feedback>();
+            CreateMap<UserPermissionForCreationDto, UserPermission>();
+            CreateMap<UserPermissionForUpdateDto, UserPermission>();
+            CreateMap<FileForCreationDTO, Entities.Models.File>();
+            CreateMap<FileForUpdateDto, Entities.Models.File>();
+            CreateMap<CommentForCreationDTO, Comment>();
+            CreateMap<CommentForUpdateDTO, Comment>();
         }
     }
 }
