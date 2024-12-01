@@ -18,5 +18,7 @@ namespace Services.Contracts
         IFeedbackService FeedbackService { get; }
         IAuthenticationService AuthenticationService { get; }
         IMarkService MarkService { get; }
+        IFileService FileService { get; }
+        IPermissionService PermissionService { get; }
     }
 }

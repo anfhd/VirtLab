@@ -24,6 +24,8 @@ namespace Services
         private readonly Lazy<IFeedbackService> _feedbackService;
         private readonly Lazy<IAuthenticationService> _authenticationService;
         private readonly Lazy<IMarkService> _markService;
+        private readonly Lazy<IFileService> _fileService;
+        private readonly Lazy<IPermissionService> _permissionService;
 
         public ServiceManager(
             IRepositoryManager repositoryManager,
@@ -52,6 +54,10 @@ namespace Services
                 => new AuthenticationService(logger, mapper, userManager));
             _markService = new Lazy<IMarkService>(()
                 => new MarkService(repositoryManager, logger, mapper));
+            _fileService = new Lazy<IFileService>(()
+                => new FileService(repositoryManager, logger, mapper));
+            _permissionService = new Lazy<IPermissionService>(()
+                => new PermissionService(repositoryManager, logger, mapper));
         }
 
         public IProgrammingLanguageService ProgrammingLanguageService => _languageService.Value;
@@ -64,5 +70,7 @@ namespace Services
         public IFeedbackService FeedbackService => _feedbackService.Value;
         public IAuthenticationService AuthenticationService => _authenticationService.Value;
         public IMarkService MarkService => _markService.Value;
+        public IFileService FileService => _fileService.Value;
+        public IPermissionService PermissionService => _permissionService.Value;
     }
 }

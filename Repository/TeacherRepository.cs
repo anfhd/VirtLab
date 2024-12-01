@@ -35,6 +35,7 @@ namespace Repository
 
         public async Task<IEnumerable<Teacher>> GetAllTeachersAsync(bool trackChanges) =>
             await FindAll(trackChanges)
+            .Include(s => s.User)
             .ToListAsync();
 
         public async Task<IEnumerable<Course>> GetCoursesForTeacherAsync(Guid teacherId, bool trackChanges) =>
@@ -49,6 +50,7 @@ namespace Repository
             await FindByCondition(t => t.Id.Equals(teacherId), trackChanges)
             .Include(t => t.Courses)
             .ThenInclude(c => c.Assignments)
+            .Include(s => s.User)
             .SingleOrDefaultAsync();
     }
 }

@@ -17,6 +17,10 @@ namespace Contracts
         ICourseRepository Course { get; }
         IFeedbackRepository Feedback { get; }
         IMarkRepository Mark { get; }
+        IFileRepository File { get; }
+        IPermissionRepository Permission { get; }
+        IFileVersionRepository FileVersion { get; }
+        ICommentRepository Comment { get; }
 
         Task SaveAsync();
     }

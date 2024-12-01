@@ -2,6 +2,7 @@
 using Entities.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.Reflection.Emit;
+using File = Entities.Models.File;
 
 namespace Repository
 {
@@ -88,6 +89,28 @@ namespace Repository
                       .HasForeignKey<Mark>(m => m.ProjectId)
                       .OnDelete(DeleteBehavior.Restrict);
             });
+
+            modelBuilder.Entity<File>(entity =>
+            {
+                entity.HasKey(f => f.Id);
+
+                entity.HasOne(f => f.Project)
+                      .WithMany(p => p.Files)
+                      .HasForeignKey(f => f.ProjectId)
+                      .OnDelete(DeleteBehavior.Cascade); // Якщо видаляється проєкт, видаляються всі файли
+
+                entity.HasMany(f => f.Versions)
+                      .WithOne(v => v.File)
+                      .HasForeignKey(v => v.FileId)
+                      .OnDelete(DeleteBehavior.Cascade); // Якщо видаляється файл, видаляються всі його версії
+            });
+
+            modelBuilder.Entity<FileVersion>(entity =>
+            {
+                entity.HasKey(v => v.Id);
+                entity.Property(v => v.Content); // Наприклад, щоб Content не міг бути null
+                entity.Property(v => v.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
+            });
         }
        
 
@@ -100,5 +123,8 @@ namespace Repository
         public DbSet<Group>? Groups { get; set; }
         public DbSet<Mark>? Marks { get; set; }
         public DbSet<Teacher>? Teachers { get; set; }
+        public DbSet<UserPermission> Permissions { get; set; }
+        public DbSet<File> Files { get; set; }
+        public DbSet<FileVersion> FileVersions { get; set; }
     }
 }
