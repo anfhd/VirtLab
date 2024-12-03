@@ -74,26 +74,19 @@ public class InvitationController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = "Student")]
+    [AllowAnonymous]
     public async Task<IActionResult> CreateInvitation([FromBody] InvitationForCreationDto invitation)
     {
         var id = await _service.InvitationService.CreateInvitationAsync(invitation);
-
-        var inviteEntity = await _service.InvitationService.GetInvitationAsync(id, trackChanges: false);
-        var url = await _service.InvitationService.CreateUrl(inviteEntity);
-        var student = await _service.StudentService.GetStudentAsync(invitation.StudentId, trackChanges: false);
-        var user = await _service.AuthenticationService.GetUserById(student.UserId);
-
-        var client = new SmtpClient("smtp.gmail.com", 587)
+        InvitationForSendingDto sendingInvite = new()
         {
-            Credentials = new NetworkCredential("olena.markiv05@gmail.com", "kywb mtxe onnq zpbp"),
-            EnableSsl = true
+            Id = id,
+            ProjectId = invitation.ProjectId,
+            StudentId = invitation.StudentId
         };
-        client.Send("olena.markiv05@gmail.com", user.Email, "[VIRT LAB]: invitation to project", url);
 
-        //створити лінку
-        //надіслати
+        await _service.InvitationService.SendInvitationAsync(sendingInvite, trackChanges: false);
 
-        return Ok(url);
+        return Ok();
     }
 }
