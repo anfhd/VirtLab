@@ -79,6 +79,7 @@ namespace Repository
             .Include(t => t.User)
             .Include(t => t.Courses)
             .ThenInclude(c => c.Assignments)
+            .ThenInclude(a=>a.Deadline)
             .Include(s => s.User)
             .SingleOrDefaultAsync();
 

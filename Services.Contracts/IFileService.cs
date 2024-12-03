@@ -23,5 +23,6 @@ namespace Services.Contracts
         Task DeleteCommentForFileAsync(Guid projectId, Guid fileId, Guid commentId);
         Task UpdateCommentForFileAsync(Guid projectId, Guid fileId, Guid commentId, CommentForUpdateDTO comment);
         Task<IEnumerable<Comment>> GetAllCommentsForFileAsync(Guid projectId, Guid fileId, bool trackChanges);
+        Task<FileVersion> GetVersionAsync(Guid versionId, bool trackChanges);
     }
 }

@@ -139,6 +139,7 @@ namespace Services
             return fileEntity;
         }
 
+
         public async Task<IEnumerable<File>> GetFilesForProjectAsync(Guid projectId, bool trackChanges)
         {
             var projectEntity = await _repository.Project.GetProjectAsync(projectId, false);
@@ -213,6 +214,14 @@ namespace Services
             await _repository.SaveAsync();
         }
 
-        
+        public async Task<FileVersion> GetVersionAsync(Guid versionId, bool trackChanges)
+        {
+            var version = await _repository.FileVersion.GetVersionAsync(versionId, trackChanges);
+
+            if (version is null) throw new FileVersionNotFoundException(versionId);
+
+            return version;
+        }
+
     }
 }

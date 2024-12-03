@@ -742,264 +742,265 @@ namespace VirtLab.Migrations
             modelBuilder.Entity("Entities.Models.File", b =>
                 {
                     b.HasOne("Entities.Models.Project", "Project")
-                        .WithMany("Files")
-            modelBuilder.Entity("Entities.Models.Invitation", b =>
-                {
-                    b.HasOne("Entities.Models.Project", "Project")
-                        .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Files");
+                    modelBuilder.Entity("Entities.Models.Invitation", b =>
+                        {
+                            b.HasOne("Entities.Models.Project", "Project")
+                                .WithMany()
+                                .HasForeignKey("ProjectId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
 
-                    b.Navigation("Project");
-                });
+                            b.Navigation("Project");
+                        });
 
-            modelBuilder.Entity("Entities.Models.FileVersion", b =>
-                {
-                    b.HasOne("Entities.Models.File", "File")
-                        .WithMany("Versions")
-                        .HasForeignKey("FileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    modelBuilder.Entity("Entities.Models.FileVersion", b =>
+                        {
+                            b.HasOne("Entities.Models.File", "File")
+                                .WithMany("Versions")
+                                .HasForeignKey("FileId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
 
-                    b.Navigation("File");
-                    b.HasOne("Entities.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                            b.Navigation("File");
+                            b.HasOne("Entities.Models.Student", "Student")
+                                .WithMany()
+                                .HasForeignKey("StudentId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
 
-                    b.Navigation("Project");
+                            b.Navigation("Project");
 
-                    b.Navigation("Student");
-                });
+                            b.Navigation("Student");
+                        });
 
-            modelBuilder.Entity("Entities.Models.Mark", b =>
-                {
-                    b.HasOne("Entities.Models.Project", "Project")
-                        .WithOne("Mark")
-                        .HasForeignKey("Entities.Models.Mark", "ProjectId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    modelBuilder.Entity("Entities.Models.Mark", b =>
+                        {
+                            b.HasOne("Entities.Models.Project", "Project")
+                                .WithOne("Mark")
+                                .HasForeignKey("Entities.Models.Mark", "ProjectId")
+                                .OnDelete(DeleteBehavior.Restrict)
+                                .IsRequired();
 
-                    b.HasOne("Entities.Models.Teacher", "Teacher")
-                        .WithMany()
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                            b.HasOne("Entities.Models.Teacher", "Teacher")
+                                .WithMany()
+                                .HasForeignKey("TeacherId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
 
-                    b.Navigation("Project");
+                            b.Navigation("Project");
 
-                    b.Navigation("Teacher");
-                });
+                            b.Navigation("Teacher");
+                        });
 
-            modelBuilder.Entity("Entities.Models.Project", b =>
-                {
-                    b.HasOne("Entities.Models.Assignment", "Assignment")
-                        .WithMany("Projects")
-                        .HasForeignKey("AssignmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    modelBuilder.Entity("Entities.Models.Project", b =>
+                        {
+                            b.HasOne("Entities.Models.Assignment", "Assignment")
+                                .WithMany("Projects")
+                                .HasForeignKey("AssignmentId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
 
-                    b.HasOne("Entities.Models.Student", "Owner")
-                        .WithMany("OwnedProjects")
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                            b.HasOne("Entities.Models.Student", "Owner")
+                                .WithMany("OwnedProjects")
+                                .HasForeignKey("OwnerId")
+                                .OnDelete(DeleteBehavior.Restrict)
+                                .IsRequired();
 
-                    b.Navigation("Assignment");
+                            b.Navigation("Assignment");
 
-                    b.Navigation("Owner");
-                });
+                            b.Navigation("Owner");
+                        });
 
-            modelBuilder.Entity("Entities.Models.Student", b =>
-                {
-                    b.HasOne("Entities.Models.Group", "Group")
-                        .WithMany("Students")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    modelBuilder.Entity("Entities.Models.Student", b =>
+                        {
+                            b.HasOne("Entities.Models.Group", "Group")
+                                .WithMany("Students")
+                                .HasForeignKey("GroupId")
+                                .OnDelete(DeleteBehavior.Restrict)
+                                .IsRequired();
 
-                    b.HasOne("Entities.Models.User", "User")
-                        .WithOne()
-                        .HasForeignKey("Entities.Models.Student", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                            b.HasOne("Entities.Models.User", "User")
+                                .WithOne()
+                                .HasForeignKey("Entities.Models.Student", "UserId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
 
-                    b.Navigation("Group");
+                            b.Navigation("Group");
 
-                    b.Navigation("User");
-                });
+                            b.Navigation("User");
+                        });
 
-            modelBuilder.Entity("Entities.Models.Teacher", b =>
-                {
-                    b.HasOne("Entities.Models.User", "User")
-                        .WithOne()
-                        .HasForeignKey("Entities.Models.Teacher", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    modelBuilder.Entity("Entities.Models.Teacher", b =>
+                        {
+                            b.HasOne("Entities.Models.User", "User")
+                                .WithOne()
+                                .HasForeignKey("Entities.Models.Teacher", "UserId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
 
-                    b.Navigation("User");
-                });
+                            b.Navigation("User");
+                        });
 
-            modelBuilder.Entity("Entities.Models.UserPermission", b =>
-                {
-                    b.HasOne("Entities.Models.Project", "Project")
-                        .WithMany("Permissions")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    modelBuilder.Entity("Entities.Models.UserPermission", b =>
+                        {
+                            b.HasOne("Entities.Models.Project", "Project")
+                                .WithMany("Permissions")
+                                .HasForeignKey("ProjectId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
 
-                    b.HasOne("Entities.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                            b.HasOne("Entities.Models.Student", "Student")
+                                .WithMany()
+                                .HasForeignKey("StudentId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
 
-                    b.Navigation("Project");
+                            b.Navigation("Project");
 
-                    b.Navigation("Student");
-                });
+                            b.Navigation("Student");
+                        });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                    modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                        {
+                            b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                                .WithMany()
+                                .HasForeignKey("RoleId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
+                        });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.HasOne("Entities.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                    modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                        {
+                            b.HasOne("Entities.Models.User", null)
+                                .WithMany()
+                                .HasForeignKey("UserId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
+                        });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.HasOne("Entities.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                    modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                        {
+                            b.HasOne("Entities.Models.User", null)
+                                .WithMany()
+                                .HasForeignKey("UserId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
+                        });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                        {
+                            b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                                .WithMany()
+                                .HasForeignKey("RoleId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
 
-                    b.HasOne("Entities.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                            b.HasOne("Entities.Models.User", null)
+                                .WithMany()
+                                .HasForeignKey("UserId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
+                        });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.HasOne("Entities.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                    modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                        {
+                            b.HasOne("Entities.Models.User", null)
+                                .WithMany()
+                                .HasForeignKey("UserId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
+                        });
 
-            modelBuilder.Entity("ProgrammingLanguageProject", b =>
-                {
-                    b.HasOne("Entities.Models.ProgrammingLanguage", null)
-                        .WithMany()
-                        .HasForeignKey("ProgrammingLanguagesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    modelBuilder.Entity("ProgrammingLanguageProject", b =>
+                        {
+                            b.HasOne("Entities.Models.ProgrammingLanguage", null)
+                                .WithMany()
+                                .HasForeignKey("ProgrammingLanguagesId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
 
-                    b.HasOne("Entities.Models.Project", null)
-                        .WithMany()
-                        .HasForeignKey("ProjectsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                            b.HasOne("Entities.Models.Project", null)
+                                .WithMany()
+                                .HasForeignKey("ProjectsId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
+                        });
 
-            modelBuilder.Entity("ProjectStudent", b =>
-                {
-                    b.HasOne("Entities.Models.Student", null)
-                        .WithMany()
-                        .HasForeignKey("ParticipantsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    modelBuilder.Entity("ProjectStudent", b =>
+                        {
+                            b.HasOne("Entities.Models.Student", null)
+                                .WithMany()
+                                .HasForeignKey("ParticipantsId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
 
-                    b.HasOne("Entities.Models.Project", null)
-                        .WithMany()
-                        .HasForeignKey("ParticipatedProjectsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                            b.HasOne("Entities.Models.Project", null)
+                                .WithMany()
+                                .HasForeignKey("ParticipatedProjectsId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
+                        });
 
-            modelBuilder.Entity("ProjectTechnology", b =>
-                {
-                    b.HasOne("Entities.Models.Project", null)
-                        .WithMany()
-                        .HasForeignKey("ProjectsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    modelBuilder.Entity("ProjectTechnology", b =>
+                        {
+                            b.HasOne("Entities.Models.Project", null)
+                                .WithMany()
+                                .HasForeignKey("ProjectsId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
 
-                    b.HasOne("Entities.Models.Technology", null)
-                        .WithMany()
-                        .HasForeignKey("TechnologiesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                            b.HasOne("Entities.Models.Technology", null)
+                                .WithMany()
+                                .HasForeignKey("TechnologiesId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
+                        });
 
-            modelBuilder.Entity("Entities.Models.Assignment", b =>
-                {
-                    b.Navigation("Projects");
-                });
+                    modelBuilder.Entity("Entities.Models.Assignment", b =>
+                        {
+                            b.Navigation("Projects");
+                        });
 
-            modelBuilder.Entity("Entities.Models.Course", b =>
-                {
-                    b.Navigation("Assignments");
-                });
+                    modelBuilder.Entity("Entities.Models.Course", b =>
+                        {
+                            b.Navigation("Assignments");
+                        });
 
-            modelBuilder.Entity("Entities.Models.File", b =>
-                {
-                    b.Navigation("Comments");
+                    modelBuilder.Entity("Entities.Models.File", b =>
+                        {
+                            b.Navigation("Comments");
 
-                    b.Navigation("Versions");
-                });
+                            b.Navigation("Versions");
+                        });
 
-            modelBuilder.Entity("Entities.Models.Group", b =>
-                {
-                    b.Navigation("Students");
-                });
+                    modelBuilder.Entity("Entities.Models.Group", b =>
+                        {
+                            b.Navigation("Students");
+                        });
 
-            modelBuilder.Entity("Entities.Models.Project", b =>
-                {
-                    b.Navigation("Feedbacks");
+                    modelBuilder.Entity("Entities.Models.Project", b =>
+                        {
+                            b.Navigation("Feedbacks");
 
-                    b.Navigation("Files");
+                            b.Navigation("Files");
 
-                    b.Navigation("Mark");
+                            b.Navigation("Mark");
 
-                    b.Navigation("Permissions");
-                });
+                            b.Navigation("Permissions");
+                        });
 
-            modelBuilder.Entity("Entities.Models.Student", b =>
-                {
-                    b.Navigation("OwnedProjects");
-                });
+                    modelBuilder.Entity("Entities.Models.Student", b =>
+                        {
+                            b.Navigation("OwnedProjects");
+                        });
 
-            modelBuilder.Entity("Entities.Models.Teacher", b =>
-                {
-                    b.Navigation("Courses");
-                });
+                    modelBuilder.Entity("Entities.Models.Teacher", b =>
+                        {
+                            b.Navigation("Courses");
+                        });
 #pragma warning restore 612, 618
+                });
         }
     }
 }
