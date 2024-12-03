@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Services.Contracts;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace VirtLab.Presentation.Controllers
         public StudentsController(IServiceManager service) => _service = service;
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetStudents()
         {
             var students = await _service.StudentService.GetAllStudentsAsync(trackChanges: false);
@@ -24,6 +26,7 @@ namespace VirtLab.Presentation.Controllers
             return Ok(students);
         }
         [HttpGet("{id:guid}")]
+        [Authorize]
         public async Task<IActionResult> GetStudent(Guid id)
         {
             var student = await _service.StudentService.GetStudentAsync(id, trackChanges: false);
@@ -32,6 +35,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpGet("{id:guid}/courses")]
+        [Authorize]
         public async Task<IActionResult> GetStudentCourses(Guid id)
         {
             var courses = await _service.StudentService.GetCoursesForStudentAsync(id, trackChanges: false);
@@ -40,6 +44,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpGet("{id:guid}/ownedProjects")]
+        [Authorize]
         public async Task<IActionResult> GetStudentOwnedProjects(Guid id)
         {
             var projects = await _service.StudentService.GetOwnedStudentProjectsAsync(id, trackChanges: false);
@@ -48,6 +53,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpGet("{id:guid}/participatedProjects")]
+        [Authorize]
         public async Task<IActionResult> GetStudentParticipatedProjects(Guid id)
         {
             var projects = await _service.StudentService.GetParticipatedStudentProjectsAsync(id, trackChanges: false);
@@ -56,6 +62,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpGet("{id:guid}/allProjects")]
+        [Authorize]
         public async Task<IActionResult> GetStudentProjects(Guid id)
         {
             var projects = await _service.StudentService.GetAllStudentProjectsAsync(id, trackChanges: false);
@@ -64,6 +71,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpGet("{id:guid}/Assignments")]
+        [Authorize]
         public async Task<IActionResult> GetStudentAssignments(Guid id)
         {
             var assignments = await _service.StudentService.GetStudentAssignmentsAsync(id, trackChanges: false);
@@ -72,6 +80,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpGet("{id:guid}/permissions")]
+        [Authorize]
         public async Task<IActionResult> GetStudentPermissions(Guid id)
         {
             var permissions = await _service.PermissionService.GetProjectsPermissionsForStudentAsync(id, trackChanges: false);

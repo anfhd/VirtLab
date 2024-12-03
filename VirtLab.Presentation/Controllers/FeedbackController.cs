@@ -1,4 +1,5 @@
 ﻿using Entities.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Contracts;
 using System;
@@ -18,6 +19,7 @@ namespace VirtLab.Presentation.Controllers
         public FeedbackController(IServiceManager service) => _service = service;
 
         [HttpGet("{id:guid}")]
+        [Authorize]
         public async Task<IActionResult> GetFeedback(Guid id)
         {
             var feedback = await _service.FeedbackService.GetFeedbackAsync(id, trackChanges: false);
@@ -25,6 +27,7 @@ namespace VirtLab.Presentation.Controllers
             return Ok(feedback);
         }
         [HttpPost]
+        [Authorize(Roles = "Teacher")]
         public async Task<IActionResult> CreateFeedbackForProject([FromBody] FeedbackForCreationDto feedback)
         {
             await _service.FeedbackService.CreateFeedbackForProjectAsync(feedback);

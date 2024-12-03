@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace VirtLab.Presentation.Controllers
 {
@@ -17,6 +18,7 @@ namespace VirtLab.Presentation.Controllers
         public TeachersController(IServiceManager service) => _service = service;
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetTeachers()
         {
             var teachers = await _service.TeacherService.GetAllTeachersAsync(trackChanges: false);
@@ -25,6 +27,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpGet("{id:guid}")]
+        [Authorize]
         public async Task<IActionResult> GetTeacher(Guid id)
         {
             var teacher = await _service.TeacherService.GetTeacherAsync(id, trackChanges: false);
@@ -33,6 +36,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpGet("{id:guid}/courses")]
+        [Authorize]
         public async Task<IActionResult> GetTeacherCourses(Guid id)
         {
             var courses = await _service.TeacherService.GetCoursesForTeacherAsync(id, trackChanges: false);
@@ -41,6 +45,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpGet("{id:guid}/projects")]
+        [Authorize]
         public async Task<IActionResult> GetTeacherProjects(Guid id)
         {
             var projects = await _service.TeacherService.GetProjectsForTeacherAsync(id, trackChanges: false);
