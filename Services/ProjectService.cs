@@ -31,7 +31,7 @@ namespace Services
             projectEntity.Owner = await _repository.Student.GetStudentAsync(project.OwnerId, true);
             projectEntity.Assignment = await _repository.Course.GetAssignmentAsync(project.AssignmentId, true);
             var technologies = await _repository.Technology.GetAllTechnologiesAsync(true);
-            var languages = await _repository.ProgrammingLanguage.GetAllProgrammingLanguagesAsync(false);
+            var languages = await _repository.ProgrammingLanguage.GetAllProgrammingLanguagesAsync(true);
             var participants = await _repository.Student.GetAllStudentsAsync(true);
 
             if(project.TechnologyIds != null) projectEntity.Technologies = technologies.Where(t => project.TechnologyIds.Contains(t.Id)).ToList();
@@ -113,7 +113,7 @@ namespace Services
             projectEntity.IsSentForReview = project.IsSentForReview;    
 
             var technologies = await _repository.Technology.GetAllTechnologiesAsync(true);
-            var languages = await _repository.ProgrammingLanguage.GetAllProgrammingLanguagesAsync(false);
+            var languages = await _repository.ProgrammingLanguage.GetAllProgrammingLanguagesAsync(true);
             var participants = await _repository.Student.GetAllStudentsAsync(true);
 
             if (project.TechnologyIds != null)

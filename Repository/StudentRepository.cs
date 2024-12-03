@@ -22,6 +22,8 @@ namespace Repository
 
         public async Task<IEnumerable<Student>> GetAllStudentsAsync(bool trackChanges) =>
            await FindAll(trackChanges)
+            .Include(s=>s.User)
+            .Include(s=>s.Group)
            .OrderBy(s => s.Id)
             .Include(s => s.User)
            .ToListAsync();
@@ -41,12 +43,14 @@ namespace Repository
             .ThenInclude(c => c.Assignments)
             .Select(s => s.Group)
             .SelectMany(g => g.Courses)
-            .SelectMany(c => c.Assignments)
+            .SelectMany(c => c.Assignments).Include(a=>a.Deadline)
             .ToListAsync();
 
         public async Task<Student> GetStudentAsync(Guid studentId, bool trackChanges) =>
-            await FindByCondition(s => s.Id.Equals(studentId), trackChanges)
-            .Include(s => s.User)
+
+            await FindByCondition(s => s.Id.Equals(studentId), trackChanges).Include(s=>s.User)
+            .Include(s => s.Group)
+
             .SingleOrDefaultAsync();
 
         public async Task<Student> GetStudentByBaseUserIdAsync(string userId, bool trackChanges) =>
@@ -59,6 +63,20 @@ namespace Repository
             .ThenInclude(op => op.Technologies)
             .Include(s => s.OwnedProjects)
             .ThenInclude(op => op.ProgrammingLanguages)
+            .Include(s => s.OwnedProjects)
+            .ThenInclude(op=>op.Participants)
+            .ThenInclude(p=>p.User)
+            .Include(s => s.OwnedProjects)
+            .ThenInclude(op => op.Owner)
+            .ThenInclude(s=>s.User)
+            .Include(s => s.OwnedProjects)
+            .ThenInclude(op=>op.Assignment)
+            .ThenInclude(a=>a.Course)
+            .ThenInclude(c=>c.Groups)
+            .Include(s => s.OwnedProjects)
+            .ThenInclude(op => op.Mark)
+            .Include(s => s.OwnedProjects)
+            .ThenInclude(op => op.Feedbacks)
             .SelectMany(s => s.OwnedProjects)
             .ToListAsync();
 
@@ -66,8 +84,22 @@ namespace Repository
             await FindByCondition(s => s.Id.Equals(studentId), trackChanges)
             .Include(s => s.ParticipatedProjects)
             .ThenInclude(pp => pp.Technologies)
-            .Include(s => s.OwnedProjects)
+            .Include(s => s.ParticipatedProjects)
             .ThenInclude(pp => pp.ProgrammingLanguages)
+            .Include(s => s.ParticipatedProjects)
+            .ThenInclude(op => op.Participants)
+            .ThenInclude(p => p.User)
+            .Include(s => s.ParticipatedProjects)
+            .ThenInclude(op => op.Owner)
+            .ThenInclude(s => s.User)
+            .Include(s => s.ParticipatedProjects)
+            .ThenInclude(op => op.Assignment)
+            .ThenInclude(a => a.Course)
+            .ThenInclude(c => c.Groups)
+            .Include(s => s.ParticipatedProjects)
+            .ThenInclude(op => op.Mark)
+            .Include(s => s.ParticipatedProjects)
+            .ThenInclude(op => op.Feedbacks)
             .SelectMany(s => s.ParticipatedProjects)
             .ToListAsync();
     }
