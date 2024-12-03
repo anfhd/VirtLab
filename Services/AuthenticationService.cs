@@ -56,6 +56,13 @@ namespace Services
             return result;
         }
 
+        public async Task<User> GetUserById(string id)
+        {
+            var result = await _userManager.FindByIdAsync(id);
+
+            return result;
+        }
+
         public async Task<User> GetUserByUsername(string username)
         {
             var result = await _userManager.FindByNameAsync(username);

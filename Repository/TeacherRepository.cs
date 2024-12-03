@@ -63,6 +63,7 @@ namespace Repository
 
         public async Task<IEnumerable<Teacher>> GetAllTeachersAsync(bool trackChanges) =>
             await FindAll(trackChanges)
+            .Include(s => s.User)
             .ToListAsync();
 
         public async Task<IEnumerable<Course>> GetCoursesForTeacherAsync(Guid teacherId, bool trackChanges) =>
@@ -78,6 +79,7 @@ namespace Repository
             .Include(t => t.User)
             .Include(t => t.Courses)
             .ThenInclude(c => c.Assignments)
+            .Include(s => s.User)
             .SingleOrDefaultAsync();
 
         public async Task<Teacher> GetTeacherByBaseUserIdAsync(string userId, bool trackChanges) =>

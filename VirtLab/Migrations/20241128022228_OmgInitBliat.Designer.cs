@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Repository;
 
@@ -11,9 +12,11 @@ using Repository;
 namespace VirtLab.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    partial class RepositoryContextModelSnapshot : ModelSnapshot
+    [Migration("20241128022228_OmgInitBliat")]
+    partial class OmgInitBliat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,34 +65,6 @@ namespace VirtLab.Migrations
                     b.HasIndex("DeadlineId");
 
                     b.ToTable("Assignment");
-                });
-
-            modelBuilder.Entity("Entities.Models.Comment", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("FileId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TeacherId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FileId");
-
-                    b.HasIndex("TeacherId");
-
-                    b.ToTable("Comment");
                 });
 
             modelBuilder.Entity("Entities.Models.Course", b =>
@@ -155,52 +130,6 @@ namespace VirtLab.Migrations
                     b.HasIndex("TeacherId");
 
                     b.ToTable("Feedbacks");
-                });
-
-            modelBuilder.Entity("Entities.Models.File", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Extension")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("ProjectId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
-
-                    b.ToTable("Files");
-                });
-
-            modelBuilder.Entity("Entities.Models.FileVersion", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValueSql("GETUTCDATE()");
-
-                    b.Property<Guid>("FileId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FileId");
-
-                    b.ToTable("FileVersions");
                 });
 
             modelBuilder.Entity("Entities.Models.Group", b =>
@@ -451,33 +380,6 @@ namespace VirtLab.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Entities.Models.UserPermission", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("CanEdit")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("CanView")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("ProjectId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("StudentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProjectId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("Permissions");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -690,25 +592,6 @@ namespace VirtLab.Migrations
                     b.Navigation("Deadline");
                 });
 
-            modelBuilder.Entity("Entities.Models.Comment", b =>
-                {
-                    b.HasOne("Entities.Models.File", "File")
-                        .WithMany("Comments")
-                        .HasForeignKey("FileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.Models.Teacher", "Teacher")
-                        .WithMany()
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("File");
-
-                    b.Navigation("Teacher");
-                });
-
             modelBuilder.Entity("Entities.Models.Course", b =>
                 {
                     b.HasOne("Entities.Models.Teacher", "Teacher")
@@ -739,10 +622,6 @@ namespace VirtLab.Migrations
                     b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("Entities.Models.File", b =>
-                {
-                    b.HasOne("Entities.Models.Project", "Project")
-                        .WithMany("Files")
             modelBuilder.Entity("Entities.Models.Invitation", b =>
                 {
                     b.HasOne("Entities.Models.Project", "Project")
@@ -751,18 +630,6 @@ namespace VirtLab.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Project");
-                });
-
-            modelBuilder.Entity("Entities.Models.FileVersion", b =>
-                {
-                    b.HasOne("Entities.Models.File", "File")
-                        .WithMany("Versions")
-                        .HasForeignKey("FileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("File");
                     b.HasOne("Entities.Models.Student", "Student")
                         .WithMany()
                         .HasForeignKey("StudentId")
@@ -840,25 +707,6 @@ namespace VirtLab.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Entities.Models.UserPermission", b =>
-                {
-                    b.HasOne("Entities.Models.Project", "Project")
-                        .WithMany("Permissions")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entities.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Project");
-
-                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -967,13 +815,6 @@ namespace VirtLab.Migrations
                     b.Navigation("Assignments");
                 });
 
-            modelBuilder.Entity("Entities.Models.File", b =>
-                {
-                    b.Navigation("Comments");
-
-                    b.Navigation("Versions");
-                });
-
             modelBuilder.Entity("Entities.Models.Group", b =>
                 {
                     b.Navigation("Students");
@@ -983,11 +824,7 @@ namespace VirtLab.Migrations
                 {
                     b.Navigation("Feedbacks");
 
-                    b.Navigation("Files");
-
                     b.Navigation("Mark");
-
-                    b.Navigation("Permissions");
                 });
 
             modelBuilder.Entity("Entities.Models.Student", b =>

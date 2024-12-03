@@ -70,5 +70,13 @@ namespace VirtLab.Presentation.Controllers
 
             return Ok(assignments);
         }
+
+        [HttpGet("{id:guid}/permissions")]
+        public async Task<IActionResult> GetStudentPermissions(Guid id)
+        {
+            var permissions = await _service.PermissionService.GetProjectsPermissionsForStudentAsync(id, trackChanges: false);
+
+            return Ok(permissions);
+        }
     }
 }

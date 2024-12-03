@@ -28,6 +28,11 @@ namespace Repository
             .Include(p => p.Owner)
             .Include(p => p.Assignment)
             .Include(p => p.Mark)
+            .Include(p => p.Files)
+            .ThenInclude(f => f.Versions)
+            .Include(p => p.Files)
+            .ThenInclude(f => f.Comments)
+            .Include(p => p.Permissions)
            .ToListAsync();
 
         public async Task<Project> GetDeletedProjectAsync(Guid projectId, bool trackChanges) =>
@@ -39,6 +44,11 @@ namespace Repository
             .Include(p => p.Owner)
             .Include(p => p.Assignment)
             .Include(p => p.Mark)
+            .Include(p => p.Files)
+            .ThenInclude(f => f.Versions)
+            .Include(p => p.Files)
+            .ThenInclude(f => f.Comments)
+            .Include(p => p.Permissions)
             .SingleOrDefaultAsync();
 
         public async Task<Project> GetProjectAsync(Guid projectId, bool trackChanges) =>
@@ -49,6 +59,11 @@ namespace Repository
             .Include(p => p.Feedbacks)
             .Include(p => p.Owner)
             .Include(p => p.Assignment)
+            .Include(p => p.Files)
+            .ThenInclude(f => f.Versions)
+            .Include(p => p.Files)
+            .ThenInclude(f => f.Comments)
+            .Include(p => p.Permissions)
             .SingleOrDefaultAsync();
 
         public async Task<IEnumerable<ProgrammingLanguage>> GetProjectLanguagesAsync(Guid projectId, bool trackChanges) =>

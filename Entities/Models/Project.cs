@@ -22,6 +22,8 @@ namespace Entities.Models
         public virtual ICollection<Technology>? Technologies { get; set; }
         public virtual ICollection<ProgrammingLanguage>? ProgrammingLanguages { get; set; }
         public virtual ICollection<Student>? Participants { get; set; }
+        public virtual ICollection<File>? Files { get; set; }
+        public virtual ICollection<UserPermission>? Permissions { get; set; }
         public virtual Mark? Mark { get; set; }
     }
 }

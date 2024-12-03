@@ -25,6 +25,7 @@ namespace Repository
             .Include(s=>s.User)
             .Include(s=>s.Group)
            .OrderBy(s => s.Id)
+            .Include(s => s.User)
            .ToListAsync();
 
         public async Task<IEnumerable<Course>> GetCoursesForStudentAsync(Guid studentId, bool trackChanges) =>
@@ -46,8 +47,10 @@ namespace Repository
             .ToListAsync();
 
         public async Task<Student> GetStudentAsync(Guid studentId, bool trackChanges) =>
+
             await FindByCondition(s => s.Id.Equals(studentId), trackChanges).Include(s=>s.User)
             .Include(s => s.Group)
+
             .SingleOrDefaultAsync();
 
         public async Task<Student> GetStudentByBaseUserIdAsync(string userId, bool trackChanges) =>
