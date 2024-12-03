@@ -14,5 +14,8 @@ namespace Services.Contracts
         Task<Guid> CreateInvitationAsync(InvitationForCreationDto invitation);
         Task<string> CreateUrl(Invitation invitation);
         Task ChangeToAccepted(Guid invitationId, bool trackChanges);
+        Task SendInvitationAsync(InvitationForSendingDto invitation, bool trackChanges);
+
+        string InvitationBody { get; set; }
     }
 }
