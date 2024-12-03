@@ -220,5 +220,13 @@ namespace VirtLab.Presentation.Controllers
 
             return Ok(comments);
         }
+        
+        [HttpGet("versions/{versionId:guid}")]
+        public async Task<IActionResult> GetVersion(Guid versionId)
+        {
+            var comments = await _service.FileService.GetVersionAsync(versionId, trackChanges: false);
+
+            return Ok(comments);
+        }
     }
 }

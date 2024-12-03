@@ -11,5 +11,6 @@ namespace Contracts
     {
         Task CreateFileVersionAsync(FileVersion version);
         Task DeleteFileVersionAsync(FileVersion version);
+        Task<FileVersion> GetVersionAsync(Guid versionId, bool trackChanges);
     }
 }
