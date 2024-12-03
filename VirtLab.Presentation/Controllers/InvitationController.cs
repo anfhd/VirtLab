@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Net.Mail;
 using System.Net;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 [Route("api/invitation")]
 [ApiController]
@@ -17,6 +18,7 @@ public class InvitationController : ControllerBase
         => _service = service;
 
     [HttpGet("{id:guid}")]
+    [Authorize]
     public async Task<IActionResult> AddUserToProject(Guid id)
     {
         var invite = await _service.InvitationService.GetInvitationAsync(id, trackChanges: false);
@@ -72,6 +74,7 @@ public class InvitationController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "Student")]
     public async Task<IActionResult> CreateInvitation([FromBody] InvitationForCreationDto invitation)
     {
         var id = await _service.InvitationService.CreateInvitationAsync(invitation);

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Services.Contracts;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace VirtLab.Presentation.Controllers
         public ProgrammingLanguagesController(IServiceManager service) => _service = service;
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetProgrammingLanguages()
         {
             var programmingLanguages = await _service.ProgrammingLanguageService.GetAllProgrammingLanguagesAsync(trackChanges: false);

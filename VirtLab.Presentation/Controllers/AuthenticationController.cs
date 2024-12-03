@@ -1,5 +1,6 @@
 ﻿using Entities.DTO;
 using Entities.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Contracts;
 
@@ -12,6 +13,7 @@ public class AuthenticationController : ControllerBase
         => _service = service;
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<IActionResult> RegisterUser(
         [FromBody] UserForRegistrationDto userForRegistration)
     {
@@ -41,6 +43,7 @@ public class AuthenticationController : ControllerBase
     }
 
     [HttpPost("login")]
+    [AllowAnonymous]
     public async Task<IActionResult> Authenticate([FromBody] UserForAuthenticationDto user)
     {
         if (!await _service.AuthenticationService.ValidateUser(user))
