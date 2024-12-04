@@ -18,7 +18,7 @@ public class InvitationController : ControllerBase
         => _service = service;
 
     [HttpGet("{id:guid}")]
-    [Authorize]
+    [AllowAnonymous]
     public async Task<IActionResult> AddUserToProject(Guid id)
     {
         var invite = await _service.InvitationService.GetInvitationAsync(id, trackChanges: false);

@@ -15,7 +15,7 @@ namespace VirtLab.Presentation.Controllers
             => _service = service;
 
         [HttpGet]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> GetProjects()
         {
             var projects = await _service.ProjectService.GetAllProjectsAsync(trackChanges: false);
@@ -24,7 +24,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> GetProject(Guid id)
         {
             var project = await _service.ProjectService.GetProjectAsync(id, trackChanges: false);
@@ -32,7 +32,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpGet("{id:guid}/technologies")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> GetProjectTechnologies(Guid id)
         {
             var projectTechnologies = await _service.ProjectService.GetProjectTechnologiesAsync(id, trackChanges: false);
@@ -41,7 +41,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpGet("{id:guid}/programmingLanguages")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> GetProjectProgrammingLanguages(Guid id)
         {
             var projectProgrammingLanguages = await _service.ProjectService.GetProjectLanguagesAsync(id, trackChanges: false);
@@ -49,7 +49,7 @@ namespace VirtLab.Presentation.Controllers
             return Ok(projectProgrammingLanguages);
         }
         [HttpPost]
-        [Authorize(Roles = "Student")]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateProject([FromBody] ProjectForCreationDto project)
         {
             if (project is null) return BadRequest("Project object is null!");
@@ -60,7 +60,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        [Authorize(Roles = "Student")]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteProject(Guid id)
         {
             await _service.ProjectService.DeleteProjectAsync(id, trackChanges: true);
@@ -69,7 +69,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpPut("{id:guid}")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> UpdateProject(Guid id, [FromBody] ProjectForUpdateDto project)
         {
             await _service.ProjectService.UpdateProjectAsync(id, project, trackChanges: true);
@@ -78,7 +78,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpPost("{id:guid}/mark")]
-        [Authorize(Roles = "Teacher")]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateMarkForProject(Guid id, [FromBody] MarkForCreationDTO mark)
         {
             await _service.MarkService.CreateMarkForProjectAsync(mark);
@@ -87,7 +87,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpPut("{id:guid}/restore")]
-        [Authorize(Roles = "Student")]
+        [AllowAnonymous]
         public async Task<IActionResult> RestoreProject(Guid id)
         {
             await _service.ProjectService.RestoreProjectAsync(id, trackChanges: true);
@@ -96,7 +96,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpPost("{id:guid}/files")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateFile(Guid id, [FromBody] FileForCreationDTO file)
         {
             await _service.FileService.CreateFileForProjectAsync(id, file);
@@ -105,7 +105,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpGet("{id:guid}/files")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> GetProjectFiles(Guid id)
         {
             var files = await _service.FileService.GetFilesForProjectAsync(id, trackChanges: false);
@@ -114,7 +114,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpDelete("{projectId:guid}/files/{fileId:guid}")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteProjectFile(Guid projectId, Guid fileId)
         {
             await _service.FileService.DeleteFileForProjectAsync(fileId);
@@ -123,7 +123,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpPut("{projectId:guid}/files/{fileId:guid}")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> UpdateProjectFile(Guid projectId, Guid fileId, [FromBody] FileForUpdateDto file)
         {
             await _service.FileService.UpdateFileAsync(projectId, fileId, file);
@@ -132,7 +132,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpPut("{projectId:guid}/files/{fileId:guid}/versions/{fileVersionId:guid}")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> RevertProjectFile(Guid projectId, Guid fileId, Guid fileVersionId)
         {
             await _service.FileService.RestoreFileVersionAsync(projectId, fileId, fileVersionId);
@@ -141,7 +141,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpDelete("{projectId:guid}/files/{fileId:guid}/versions/{fileVersionId:guid}")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteProjectFileVersion(Guid projectId, Guid fileId, Guid fileVersionId)
         {
             await _service.FileService.DeleteFileVersionAsync(projectId, fileId, fileVersionId);
@@ -150,7 +150,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpPost("{id:guid}/permissions")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateProjectPermission(Guid id, [FromBody] UserPermissionForCreationDto permission)
         {
             await _service.PermissionService.CreatePermissionAsync(id, permission.StudentId, permission);
@@ -159,7 +159,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpGet("{id:guid}/permissions")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> GetProjectPermissions(Guid id)
         {
             var permissions = await _service.PermissionService.GetPermissionsForProjectAsync(id, trackChanges: false);
@@ -168,7 +168,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpDelete("{projectId:guid}/permissions/{permissionId:guid}")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteProjectPermission(Guid projectId, Guid permissionId)
         {
             await _service.PermissionService.DeletePermissionAsync(permissionId);
@@ -177,7 +177,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpPut("{projectId:guid}/permissions/{permissionId:guid}")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> UpdateProjectPermission(Guid projectId, Guid permissionId, [FromBody]UserPermissionForUpdateDto permission)
         {
             await _service.PermissionService.UpdatePermissionAsync(projectId, permission.StudentId, permissionId, permission);
@@ -186,7 +186,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpPost("{projectId:guid}/files/{fileId:guid}/comments")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateCommentForFile(Guid projectId, Guid fileId, [FromBody]CommentForCreationDTO comment)
         {
             await _service.FileService.CreateCommentForFileAsync(projectId, fileId, comment);
@@ -195,7 +195,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpDelete("{projectId:guid}/files/{fileId:guid}/comments/{commentId:guid}")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteCommentForFile(Guid projectId, Guid fileId, Guid commentId)
         {
             await _service.FileService.DeleteCommentForFileAsync(projectId, fileId, commentId);
@@ -204,7 +204,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpPut("{projectId:guid}/files/{fileId:guid}/comments/{commentId:guid}")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> UpdateCommentForFile(Guid projectId, Guid fileId, Guid commentId, [FromBody]CommentForUpdateDTO comment)
         {
             await _service.FileService.UpdateCommentForFileAsync(projectId, fileId, commentId, comment);
@@ -213,7 +213,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpGet("{projectId:guid}/files/{fileId:guid}/comments")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> GetCommentsForFile(Guid projectId, Guid fileId)
         {
             var comments = await _service.FileService.GetAllCommentsForFileAsync(projectId, fileId, trackChanges: false);
@@ -222,6 +222,7 @@ namespace VirtLab.Presentation.Controllers
         }
         
         [HttpGet("versions/{versionId:guid}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetVersion(Guid versionId)
         {
             var comments = await _service.FileService.GetVersionAsync(versionId, trackChanges: false);

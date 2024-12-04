@@ -18,7 +18,7 @@ namespace VirtLab.Presentation.Controllers
         public CoursesController(IServiceManager service) => _service = service;
 
         [HttpGet]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> GetCourses()
         {
             var courses = await _service.CourseService.GetAllCoursesAsync(trackChanges: false);
@@ -27,7 +27,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpGet("{id:guid}/assignments")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> GetCourseAssignments(Guid id)
         {
             var courseAssignments = await _service.CourseService.GetCourseAssignmentsAsync(id, trackChanges: false);
@@ -36,7 +36,7 @@ namespace VirtLab.Presentation.Controllers
         }
 
         [HttpGet("/assignments/{assignmentId:guid}")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAssignment(Guid assignmentId)
         {
             var assignment = await _service.CourseService.GetAssignmentAsync(assignmentId, trackChanges: false);

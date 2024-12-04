@@ -19,7 +19,7 @@ namespace VirtLab.Presentation.Controllers
         public FeedbackController(IServiceManager service) => _service = service;
 
         [HttpGet("{id:guid}")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> GetFeedback(Guid id)
         {
             var feedback = await _service.FeedbackService.GetFeedbackAsync(id, trackChanges: false);
@@ -27,7 +27,7 @@ namespace VirtLab.Presentation.Controllers
             return Ok(feedback);
         }
         [HttpPost]
-        [Authorize(Roles = "Teacher")]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateFeedbackForProject([FromBody] FeedbackForCreationDto feedback)
         {
             await _service.FeedbackService.CreateFeedbackForProjectAsync(feedback);
