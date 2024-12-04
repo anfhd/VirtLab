@@ -63,11 +63,14 @@ namespace Repository
             .Include(p => p.Owner)
             .ThenInclude(o=>o.User)
             .Include(p => p.Assignment)
+            .ThenInclude(a=>a.Course)
             .Include(p => p.Files)
             .ThenInclude(f => f.Versions)
             .Include(p => p.Files)
             .ThenInclude(f => f.Comments)
             .Include(p => p.Permissions)
+            .ThenInclude(p=>p.Student)
+            .ThenInclude(s=>s.User)
             .SingleOrDefaultAsync();
 
         public async Task<IEnumerable<ProgrammingLanguage>> GetProjectLanguagesAsync(Guid projectId, bool trackChanges) =>

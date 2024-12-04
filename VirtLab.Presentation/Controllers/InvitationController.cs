@@ -8,6 +8,7 @@ using System.Net.Mail;
 using System.Net;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using System;
 
 [Route("api/invitation")]
 [ApiController]
@@ -17,7 +18,7 @@ public class InvitationController : ControllerBase
     public InvitationController(IServiceManager service)
         => _service = service;
 
-    [HttpGet("{id:guid}")]
+    [HttpGet("invite/{id:guid}")]
     [AllowAnonymous]
     public async Task<IActionResult> AddUserToProject(Guid id)
     {
@@ -65,14 +66,29 @@ public class InvitationController : ControllerBase
             ProgrammingLanguageIds = project.ProgrammingLanguages.Select(x => x.Id).ToList(),
             ParticipantIds = newParticipants.ToList()
         };
+        UserPermissionForCreationDto userPermissionForCreation = new()
+        {
+            CanView = true,
+            CanEdit = true,
+            StudentId = student.Id,
+            ProjectId = project.Id,
+        };
 
         await _service.ProjectService.UpdateProjectAsync(project.Id, projectForUpdate, trackChanges: true);
+        await _service.PermissionService.CreatePermissionAsync(project.Id, student.Id, userPermissionForCreation);
         await _service.InvitationService.ChangeToAccepted(id, trackChanges: true);
         //todo redirect
 
-        return Redirect("https://localhost:4012/");
+        return Ok();
     }
+    [HttpGet("{id:guid}")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetInvitation(Guid id)
+    {
+        var invite = await _service.InvitationService.GetInvitationAsync(id, trackChanges: false);
 
+        return Ok(invite);
+    }
     [HttpPost]
     [AllowAnonymous]
     public async Task<IActionResult> CreateInvitation([FromBody] InvitationForCreationDto invitation)

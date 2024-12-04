@@ -72,7 +72,7 @@ namespace Services
         {
             var client = new SmtpClient("smtp.gmail.com", 587)
             {
-                Credentials = new NetworkCredential("olena.markiv05@gmail.com", "kywb mtxe onnq zpbp"),
+                Credentials = new NetworkCredential("virtlab.noreply@gmail.com", "arua hgtt ixgh gepl"),
                 EnableSsl = true
             };
 
@@ -89,7 +89,7 @@ namespace Services
 
             var mailMessage = new MailMessage
             {
-                From = new MailAddress("olena.markiv05@gmail.com"),
+                From = new MailAddress("virtlab.noreply@gmail.com"),
                 Subject = $"[ VirtLab ]: Invitation to {projectName} project",
                 Body = message,
                 IsBodyHtml = true
